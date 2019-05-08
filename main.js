@@ -88,10 +88,14 @@ function spawnNotification(theBody, theIcon, theTitle) {
 
 function pswKeyPressed() {
     if (event.keyCode == 13) {
-        let userMail = document.getElementById('userMail').value;
-        let userPassword = document.getElementById('userPassword').value;
-        login(userMail, userPassword);
+        btnLogin();
     }
+}
+
+function btnLogin() {
+    let userMail = document.getElementById('userMail').value;
+    let userPassword = document.getElementById('userPassword').value;
+    login(userMail, userPassword);
 }
 
 function login(userMail, userPassword) {
