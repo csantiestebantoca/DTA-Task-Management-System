@@ -3,7 +3,7 @@
     "short_name": "DTA-TMS",
     "description": "Free Planning System for task management",
     "background_color": "#2B2B2B",
-    "theme_color": "#F0DBEF",
+    "theme_color": "#0000EF",
     "orientation": "portrait",
     "display": "standalone",
     "start_url": "./?utm_source=web_app_manifest",
