@@ -46,7 +46,7 @@
                 <img class="header-img" src="./image.png" alt="">
             </div>
             <div class="header-main">
-                <span>Tasks Management System</span>
+                <span>Easy Tasks</span>
                 <span id="projectName" class="projectName">Make your work easy</span>
             </div>
             <div id="userOptions" class="userOptions"></div>
@@ -96,8 +96,6 @@
     </header>
 
     <div class="container">
-
-        <!--div class="main"-->
 
         <div id="login" class="login">
             <div class="modalHeader">
@@ -181,27 +179,27 @@
             </div>
 
             <div id="projectBoard" class="projectArea">
-                <div id="drag_To do" class="column">
+                <div id="drag_To do" class="column column1">
                     <div id="columnTitle_To do" class="columnTitle"></div>
                     <div id="columnContent_To do" class="columnContent" ondrop="drop(event, '')"
                         ondragover="allowDrop(event)" ondragleave="leaveDrop(event)"></div>
                 </div>
-                <div id="drag_On schedule" class="column">
+                <div id="drag_On schedule" class="column column2">
                     <div id="columnTitle_On schedule" class="columnTitle"></div>
                     <div id="columnContent_On schedule" class="columnContent" ondrop="drop(event, 'On schedule')"
                         ondragover="allowDrop(event)" ondragleave="leaveDrop(event)"></div>
                 </div>
-                <div id="drag_Overdue" class="column">
+                <div id="drag_Overdue" class="column column3">
                     <div id="columnTitle_Overdue" class="columnTitle"></div>
                     <div id="columnContent_Overdue" class="columnContent" ondrop="drop(event, 'Overdue')"
                         ondragover="allowDrop(event)" ondragleave="leaveDrop(event)"></div>
                 </div>
-                <div id="drag_Done" class="column">
+                <div id="drag_Done" class="column column4">
                     <div id="columnTitle_Done" class="columnTitle"></div>
                     <div id="columnContent_Done" class="columnContent" ondrop="drop(event, 'Done')"
                         ondragover="allowDrop(event)" ondragleave="leaveDrop(event)"></div>
                 </div>
-                <div id="drag_Canceled" class="column">
+                <div id="drag_Canceled" class="column column5">
                     <div id="columnTitle_Canceled" class="columnTitle"></div>
                     <div id="columnContent_Canceled" class="columnContent" ondrop="drop(event, 'Canceled')"
                         ondragover="allowDrop(event)" ondragleave="leaveDrop(event)"></div>
@@ -335,8 +333,6 @@
                 </div>
             </div>
         </div>
-
-        <!--/div-->
 
         <div id="team" class="teamModal" style="display:none;">
             <div class="modalHeader">

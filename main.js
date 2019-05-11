@@ -331,7 +331,7 @@ function getTaskResponsibleAvatars(taskReponsibles) {
 function showSelectedProject() {
     closeAllWindows();
     viewIndex = 1;
-    document.getElementById('projectBoard').style.display = 'block';
+    document.getElementById('projectBoard').style.display = 'grid';
     document.getElementById('optionsButtons').style.display = 'block';
 }
 
@@ -393,7 +393,7 @@ function getUsersAvatars(responsible) {
 
 function openProjectInfo() {
     closeAllWindows();
-    document.getElementById('projectData').style.display = 'block';
+    document.getElementById('projectData').style.display = 'grid';
     document.getElementById('optionsButtons').style.display = 'block';
 }
 
@@ -737,10 +737,10 @@ function drawChartTasks(tasksList) {
             name: 'Tasks status',
             data: data
         }],
-        /*responsive: {
+        responsive: {
             rules: [{
                 condition: {
-                    maxWidth: 500
+                    maxWidth: 640
                 },
                 chartOptions: {
                     legend: {
@@ -753,7 +753,7 @@ function drawChartTasks(tasksList) {
                     },
                 }
             }]
-        }*/
+        }
     });
 }
 
@@ -800,10 +800,10 @@ function drawChartUsers(tasksList, usersList) {
             }
         },
         series: getTaskStatusByUser(),
-        /*responsive: {
+        responsive: {
             rules: [{
                 condition: {
-                    maxWidth: 500
+                    maxWidth: 640
                 },
                 chartOptions: {
                     legend: {
@@ -816,7 +816,7 @@ function drawChartUsers(tasksList, usersList) {
                     },
                 }
             }]
-        }*/
+        }
     });
 }
 

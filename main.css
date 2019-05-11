@@ -10,7 +10,6 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
-
 }
 
 .container {
@@ -30,7 +29,7 @@ body {
 }
 
 .footer {
-    background: rgba(0,0,0,.35);
+    background: rgba(0, 0, 0, .35);
     padding: 10px;
     clear: both;
     color: wheat;
@@ -110,16 +109,19 @@ body {
 .projectName {
     display: block;
     color: #fff;
-    font-size: .6em;
+    font-size: .5em;
     margin-top: -5px;
 }
 
 .projectArea {
+    display: grid;
+    grid-template-areas: "projectAreaLeft projectAreaLeft projectAreaRight projectAreaRight projectAreaRight"
+        "column1 column2 column3 column4 column5";
+    height: calc(100vh - 170px);
     background: rgba(255, 255, 255, .3);
     border-radius: 5px;
     border: 1px solid gray;
     padding: 3px;
-    height: 73vh;
     margin: 5px;
     box-shadow: 2px 2px 4px black;
 }
@@ -163,9 +165,8 @@ body {
 /* #region Columns*/
 
 .column {
-    width: 19%;
-    padding: 5px;
-    float: left;
+    width: calc(95vw / 5);
+    padding: 3px;
 }
 
 .columnTitle {
@@ -182,7 +183,7 @@ body {
 }
 
 .columnContent {
-    height: 65vh;
+    height: 68vh;
     overflow-y: auto;
 }
 
@@ -273,10 +274,9 @@ body {
 
 .login {
     position: relative;
-    width: 400px;
+    width: calc(100vw/2);
     top: 50px;
-    left: 50%;
-    margin-left: -200px;
+    left: calc(100vw/4);
     border-radius: 5px;
     background: white;
     border: 1px solid blue;
@@ -284,12 +284,11 @@ body {
 }
 
 .modalWindow {
-    width: 40%;
     position: relative;
-    left: 50%;
-    margin-left: -20%;
+    width: calc(100vw/2 + 100vw/8);
+    left: calc(100vw/6);
     border: 1px solid blue;
-    border-radius: 5px;    
+    border-radius: 5px;
     background: white;
     box-shadow: 2px 2px 3px black;
     margin-top: 20px;
@@ -447,7 +446,7 @@ header {
 .header-main {
     color: white;
     float: left;
-    margin-top: -15px;
+    margin-top: -12px;
     font-size: 2em;
 }
 
@@ -508,6 +507,89 @@ ul li a:hover {
     float: right;
     margin-right: 30px;
     font-size: .7em;
+}
+
+/* #endregion */
+
+/* #region Responsive */
+
+@media only screen and (max-width: 640px) {
+    .container {
+        padding-top: 50px;
+    }
+
+    .projectArea {
+        display: grid;
+        grid-template-areas: "projectAreaRight""projectAreaLeft""column1""column2""column3""column4""column5";
+        height: 88vh;
+        overflow-y: auto;
+    }
+
+    .column {
+        width: 100%;
+    }
+
+    .column {
+        width: 100%;
+        padding: 3px;
+    }
+
+    .columnContent {
+        height: 100px;
+    }
+
+    .login {
+        width: calc(100vw/2 + 100vw/4);
+        left: calc(100vw/8);
+    }
+
+    .footer {
+        display: none;
+    }
+
+    .optionsButtons {
+        display: none !important;
+    }
+
+    .headerTitle {
+        height: 25px;
+    }
+
+    .header-left {
+        margin-right: 10px;
+    }
+
+    .header-img {
+        width: 70px;
+        height: 23px;
+    }
+
+    .header-main {
+        margin-top: -5px;
+        font-size: 1em;
+    }
+
+    .projectName {
+        font-size: .7em;
+    }
+
+    .userOptions {
+        margin-top: -5px;
+    }
+
+    #userName {
+        display: none;
+    }
+
+    .avatar {
+        width: 30px;
+    }
+
+    .modalWindow {
+        width: calc(100vw/2 + 100vw/4);
+        left: calc(100vw/3);
+        font-size: .7em;
+    }
 }
 
 /* #endregion */
