@@ -298,7 +298,12 @@ body {
 .modalHeader {
     background: #f6f6f6;
     border-radius: 5px 5px 0 0;
-    padding: 10px 10px 10px 30px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 700;
+    border-bottom: 1px solid gray;
+}
+
+.modalSubtitle {
     font-weight: 700;
     border-bottom: 1px solid gray;
 }
@@ -318,6 +323,7 @@ body {
     padding: 10px;
     border-top: 1px solid gray;
     text-align: right;
+    clear: both;
 }
 
 .projectBox {
@@ -340,6 +346,17 @@ body {
     display: flex;
     align-items: center;
     font-size: 1.5em;
+}
+
+.projectTypeItem {
+    padding: 5px;
+    margin: 5px;
+}
+
+.projectTypeItem:hover {
+    border: 1px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 button {
@@ -509,6 +526,18 @@ ul li a:hover {
     font-size: .7em;
 }
 
+.taskModal {
+    width: 45%;
+    float: left;
+}
+
+.verticalSeparator {
+    border-left: 1px solid grey;
+    margin: 10px 0 10px 0;
+    height: 410px;
+    float: left;
+}
+
 /* #endregion */
 
 /* #region Responsive */
@@ -587,7 +616,7 @@ ul li a:hover {
 
     .modalWindow {
         width: calc(100vw/2 + 100vw/4);
-        left: calc(100vw/3);
+        left: calc(100vw/8);
         font-size: .7em;
     }
 }

@@ -114,7 +114,8 @@
                 <p id="loginError" style="color: red; display: none">User mail or password incorrect!!!</p>
             </div>
             <div class="modalFooter">
-                <button onclick="document.getElementById('login').style.display = 'none';document.getElementById('register').style.display = 'block';">Register</button>
+                <button
+                    onclick="document.getElementById('login').style.display = 'none';document.getElementById('register').style.display = 'block';">Register</button>
                 <button onclick="btnLogin()">Login</button>
             </div>
         </div>
@@ -146,10 +147,12 @@
                     <span class="input-group-addon"><i class="fa fa-users fa-fw" aria-hidden="true"></i></span>
                     <input id="setUserRole" class="form-control" type="text" placeholder="Type your role" autofocus>
                 </div>
-                <p id="registerError" style="color: red; display: none">Password check incorrect or Error mail address!!!</p>
+                <p id="registerError" style="color: red; display: none">Password check incorrect or Error mail
+                    address!!!</p>
             </div>
             <div class="modalFooter">
-                <button onclick="document.getElementById('login').style.display = 'block';document.getElementById('register').style.display = 'none';">Cancel</button>
+                <button
+                    onclick="document.getElementById('login').style.display = 'block';document.getElementById('register').style.display = 'none';">Cancel</button>
                 <button onclick="register()">Create</button>
             </div>
         </div>
@@ -209,7 +212,9 @@
             <div id="projectTaskList" class="projectArea" style="display: none;">
                 <div class="filterBar">
                     <ul>
-                        <li><input id="searchTask" type="text" onkeyup="searchTask()" style="margin-bottom: 0px; margin-top: 3px; background: transparent;" placeholder="Search..."></li>
+                        <li><input id="searchTask" type="text" onkeyup="searchTask()"
+                                style="margin-bottom: 0px; margin-top: 3px; background: transparent;"
+                                placeholder="Search..."></li>
                         <li><a href="#" onclick="searchTask()"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                         <li><a href="#" onclick="filterTask('All')">&nbsp;<i class="fa fa-list-alt" aria-hidden="true"
                                     title="Show all tasks"></i>&nbsp;</a></li>
@@ -235,7 +240,7 @@
         </div>
 
         <div id="taskWindow" class="modalBackgroud">
-            <div class="modalWindow taskModal">
+            <div class="modalWindow">
                 <div class="modalHeader">Edit task</div>
                 <div class="modalContainer">
                     <div>
@@ -305,15 +310,15 @@
         </div>
 
         <div id="newProjectWindow" class="modalBackgroud">
-            <div class="modalWindow taskModal">
+            <div class="modalWindow">
                 <div class="modalHeader">New project</div>
-                <div class="modalContainer">
+                <div class="modalContainer taskModal">
                     <div class="input-group margin-bottom-sm">
-                        Name: <input id="newProjectName" class="form-control" type="text" placeholder="Project Name">
+                        Name: <input id="newProjectName" class="form-control" type="text" placeholder="Project name">
                     </div>
                     <div class="input-group margin-bottom-sm">
                         Leader: <input id="newProjectLeader" class="form-control" type="hidden"
-                            placeholder="Project Leader">
+                            placeholder="Project leader">
                         <span id="newProjectLeaderName"></span>
                     </div>
                     <div class="input-group margin-bottom-sm">
@@ -324,7 +329,39 @@
                     </div>
                     <div class="input-group margin-bottom-sm">
                         Status: <input id="newProjectStatus" class="form-control" type="text"
-                            placeholder="Project Status">
+                            placeholder="Project status">
+                    </div>
+                    <div class="input-group margin-bottom-sm">
+                        Type: <input id="projectType" class="form-control" type="text"
+                            placeholder="Project type" readonly="readonly">
+                    </div>
+                </div>
+                <div id="verticalSeparator" class="verticalSeparator"></div>
+                <div class="modalContainer taskModal" value="empty">
+                    <div class="modalSubtitle">Select project template:</div>
+                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'General project'">
+                        <i class="fa fa-file-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;General project
+                    </div>
+                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Daily work'">
+                        <i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Daily work
+                    </div>
+                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Business plan'">
+                        <i class="fa fa-file-powerpoint-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Business plan
+                    </div>
+                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Research plan'">
+                        <i class="fa fa-files-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Research plan
+                    </div>
+                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Thesis organization'">
+                        <i class="fa fa-file-word-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Thesis organization
+                    </div>
+                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Software management'">
+                        <i class="fa fa-file-code-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Software management
+                    </div>
+                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Meeting organization'">
+                        <i class="fa fa-file-text fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Meeting organization
+                    </div>
+                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Party organization'">
+                        <i class="fa fa-file-sound-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Party organization
                     </div>
                 </div>
                 <div class="modalFooter">
@@ -378,8 +415,8 @@
     </div>
 
     <div class="footer">
-        &copy; 2019 by DTA Labs <i>[Laboratorio de Desarrollos Tecnológicos Avanzados]</i>. All rights reserved. <a
-            href="https://www.dwrobelconsulting.com">Powered by DWConsulting
+        &copy; 2019 by DTA Labs <i>[Laboratorio de Desarrollos Tecnológicos Avanzados]</i>. All rights
+        reserved. <a href="https://www.dwrobelconsulting.com">Powered by DWConsulting
             Professional Services</a>
     </div>
 
