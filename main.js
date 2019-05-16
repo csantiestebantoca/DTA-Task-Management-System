@@ -1137,13 +1137,7 @@ function drawChartTasks(tasksList) {
             text: 'DW Planning'
         },
         xAxis: {
-            categories: [
-                'To do',
-                'Done',
-                'On schedule',
-                'Overdue',
-                'Canceled'
-            ],
+            categories: actualProject.columns,
             crosshair: true
         },
         yAxis: {
@@ -1196,7 +1190,6 @@ function drawChartTasks(tasksList) {
 }
 
 function drawChartUsers(tasksList, usersList) {
-    let data = getChartData(tasksList);
     let users = getUsers(usersList);
     Highcharts.chart('chartUsers', {
         chart: {
@@ -1265,16 +1258,16 @@ function getChartData(tasksList) {
             case "":
                 result[0]++;
                 break;
-            case "Done":
+            case "3":
                 result[1]++;
                 break;
-            case "On schedule":
+            case "1":
                 result[2]++;
                 break;
-            case "Overdue":
+            case "2":
                 result[3]++;
                 break;
-            case "Canceled":
+            case "4":
                 result[4]++;
                 break;
         }
@@ -1292,20 +1285,20 @@ function getUsers(usersList) {
 
 function getTaskStatusByUser() {
     let result = [{
-        name: 'To do',
+        name: actualProject.columns[0],
         data: getUserTasks('')
     }, {
-        name: 'Done',
-        data: getUserTasks('Done')
+        name: actualProject.columns[3],
+        data: getUserTasks('3')
     }, {
-        name: 'On schedule',
-        data: getUserTasks('On schedule')
+        name: actualProject.columns[1],
+        data: getUserTasks('1')
     }, {
-        name: 'Overdue',
-        data: getUserTasks('Overdue')
+        name: actualProject.columns[2],
+        data: getUserTasks('2')
     }, {
-        name: 'Canceled',
-        data: getUserTasks('Canceled')
+        name: actualProject.columns[4],
+        data: getUserTasks('4')
     }];
     return result;
 }
@@ -1314,8 +1307,8 @@ function getUserTasks(status) {
     let result = [];
     usersList.forEach(user => {
         let taskNumber = 0;
-        for (let task in tasksList) {
-            if (tasksList[task].status == status && tasksList[task].responsible.includes(user.key)) {
+        for (let taskId in tasksList) {
+            if (tasksList[taskId].status == status && tasksList[taskId].responsible.includes(user.key)) {
                 taskNumber++;
             }
         }
