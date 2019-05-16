@@ -371,6 +371,30 @@ input,
     margin-bottom: 10px;
     width: 95%;
     padding: 5px;
+    border: 1px solid gray;
+    text-align: justify;
+}
+
+.checkItemTable {
+    border-spacing: 0px;
+    width: 100%;
+}
+
+.checkboxControl {
+    width: 20px;
+    transform: scale(1.5);
+    margin-top: 7px;
+    cursor: pointer;
+}
+
+.checkItemOptions:hover {
+    cursor: pointer;
+    background: lightgrey;
+}
+
+.checkItem:hover {
+    background: whitesmoke;
+    border-radius: 5px;
 }
 
 .chatWindow {

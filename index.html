@@ -172,6 +172,7 @@
                     <div class="projectInfo" style="display: none;">Start date: <span id="projectStart"></span></div>
                     <div class="projectInfo" style="display: none;">End date: <span id="projectEnd"></span></div>
                     <div class="projectInfo" style="display: none;">Status: <span id="projectStatus"></span></div>
+                    <div class="projectInfo" style="display: none;">Status: <span id="projectType"></span></div>
                     <div class="projectInfo">Team (Name & position):</div>
                     <div id="projectUsers" class="projectInfo" style="width: 100%"></div>
                 </div>
@@ -245,7 +246,7 @@
                 <div class="modalContainer">
                     <div>
                         <b><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Task title:</b>
-                        <div id="task" type="text" class="inputData" style="border: 1px solid gray;"
+                        <div id="task" type="text" class="inputData"
                             contenteditable="true"></div>
                     </div>
                     <br>
@@ -283,7 +284,7 @@
                     <br>
                     <div>
                         <div><b><i class="fa fa-comment-o" aria-hidden="true"></i> Comments:</b></div>
-                        <div id="comments" class="inputData" style="border: 1px solid gray;" contenteditable="true">
+                        <div id="comments" class="inputData" contenteditable="true">
                         </div>
                     </div>
                     <br>
@@ -293,10 +294,10 @@
                         <i id="taskFavorite" class="fa fa-star-o" aria-hidden="true" onclick="markTaskAsFavorite()"
                             style="cursor: pointer" title="Mark as favorite"></i>
                     </div>
-                    <!--div>
+                    <div>
                         Area: <input id="area" type="text"><br>
-                        Repeat: <input id="repeat" type="text"><br>
-                    </div-->
+                        <!--Repeat: <input id="repeat" type="text"><br>-->
+                    </div>
                     <input id="key" type="hidden">
                     <input id="important" type="hidden">
                     <input id="favorite" type="hidden">

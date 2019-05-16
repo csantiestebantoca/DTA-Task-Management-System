@@ -240,6 +240,7 @@ function setProjectData() {
     document.getElementById('projectStart').innerHTML = actualProject.startDate;
     document.getElementById('projectEnd').innerHTML = actualProject.endDate;
     document.getElementById('projectStatus').innerHTML = actualProject.status;
+    document.getElementById('projectType').innerHTML = actualProject.type;
     showProjectUsers();
 }
 
@@ -351,6 +352,7 @@ function createNewProject() {
         startDate: document.getElementById('newProjectStart').value,
         endDate: document.getElementById('newProjectEnd').value,
         status: document.getElementById('newProjectStatus').value,
+        type: document.getElementById('newProjectType').value,
         team: document.getElementById('newProjectLeader').value
     }
     let projectKey = newProjectIndex;
@@ -857,7 +859,7 @@ function addNewTask() {
         endDate: "",
         percentage: "",
         comments: "",
-        //area: "",
+        area: "",
         status: "",
         //repeat: "",
         important: 'false',
@@ -895,7 +897,7 @@ function showFrom(task, taskKey, showDeleteButton) {
     document.getElementById("endDate").value = task.endDate;
     document.getElementById("percentage").innerHTML = task.percentage;
     document.getElementById("comments").innerHTML = task.comments;
-    //document.getElementById("area").value = task.area;
+    document.getElementById("area").value = task.area;
     document.getElementById("status").value = task.status;
     //document.getElementById("repeat").value = task.repeat;
     document.getElementById("checkList").innerHTML = getCheckListHTML(taskKey, task.checkList);
@@ -959,12 +961,22 @@ function getCheckListHTML(taskKey, checkList) {
     let result = "";
     for (let i in checkList) {
         let status = (checkList[i].status) ? "checked" : "";
-        result += '<input type="checkbox" onclick="calculatePercentage()" class="checkListChecked" ' + status + ' style="width: 20px; transform: scale(1.2);"> ';
-        result += '<span type="text" class="checkListItem inputData" contenteditable="true">' + checkList[i].item + '</span>';
-        //result += '<i class="fa fa-caret-square-o-up" aria-hidden="true" onclick=""></i>';
-        //result += '<i class="fa fa-caret-square-o-down" aria-hidden="true" onclick=""></i>';
-        result += '<i class="fa fa-window-close-o" aria-hidden="true" onclick="deleteCheckList(\'' + taskKey + '\',\'' + i + '\')" style="cursor: pointer;" title="Delete"></i>';
-        result += '<br>';
+        result += `
+            <table class="checkItemTable">
+                <tr class="checkItem">
+                    <td valign="top" width="5%">
+                        <input type="checkbox" class="checkboxControl" onclick="calculatePercentage()" ${status}>
+                    </td>
+                    <td valign="top" width="85%" align="justify">
+                        <span type="text" contenteditable="true">${checkList[i].item}</span>
+                    </td>
+                    <td valign="top" width="10%" align="right">
+                        <i class="fa fa-id-card-o checkItemOptions" aria-hidden="true" title="Convert to task..."></i>
+                        <b><span onclick="deleteCheckList('${taskKey}','${i}')" class="checkItemOptions" title="Delete...">&nbsp;&times;&nbsp;</span></b>
+                    </td>
+                </tr>
+            </table>
+        `;
     }
     return result;
 }
