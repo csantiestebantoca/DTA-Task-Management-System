@@ -160,7 +160,7 @@
         <div id="project">
             <div id="projectSelector" class="projectSelector">
                 <div id="project_0" class="projectBox">
-                    <div class="projectBoxName" onclick="showNewProjectWindow()()"><span
+                    <div class="projectBoxName" onclick="showNewProjectWindow()"><span
                             style="font-size: 7em; margin-top: -30px; margin-left: 40px;">+</span></div>
                 </div>
                 <div id="projectList"></div>
@@ -182,29 +182,29 @@
             </div>
 
             <div id="projectBoard" class="projectArea">
-                <div id="drag_To do" class="column column1">
-                    <div id="columnTitle_To do" class="columnTitle"></div>
-                    <div id="columnContent_To do" class="columnContent" ondrop="drop(event, '')"
+                <div id="drag_To do" class="column column0">
+                    <div id="columnTitle_0" class="columnTitle"></div>
+                    <div id="columnContent_0" class="columnContent" ondrop="drop(event, '')"
                         ondragover="allowDrop(event)" ondragleave="leaveDrop(event)"></div>
                 </div>
-                <div id="drag_On schedule" class="column column2">
-                    <div id="columnTitle_On schedule" class="columnTitle"></div>
-                    <div id="columnContent_On schedule" class="columnContent" ondrop="drop(event, 'On schedule')"
+                <div id="drag_On schedule" class="column column1">
+                    <div id="columnTitle_1" class="columnTitle"></div>
+                    <div id="columnContent_1" class="columnContent" ondrop="drop(event, '1')"
                         ondragover="allowDrop(event)" ondragleave="leaveDrop(event)"></div>
                 </div>
-                <div id="drag_Overdue" class="column column3">
-                    <div id="columnTitle_Overdue" class="columnTitle"></div>
-                    <div id="columnContent_Overdue" class="columnContent" ondrop="drop(event, 'Overdue')"
+                <div id="drag_Overdue" class="column column2">
+                    <div id="columnTitle_2" class="columnTitle"></div>
+                    <div id="columnContent_2" class="columnContent" ondrop="drop(event, '2')"
                         ondragover="allowDrop(event)" ondragleave="leaveDrop(event)"></div>
                 </div>
-                <div id="drag_Done" class="column column4">
-                    <div id="columnTitle_Done" class="columnTitle"></div>
-                    <div id="columnContent_Done" class="columnContent" ondrop="drop(event, 'Done')"
+                <div id="drag_Done" class="column column3">
+                    <div id="columnTitle_3" class="columnTitle"></div>
+                    <div id="columnContent_3" class="columnContent" ondrop="drop(event, '3')"
                         ondragover="allowDrop(event)" ondragleave="leaveDrop(event)"></div>
                 </div>
-                <div id="drag_Canceled" class="column column5">
-                    <div id="columnTitle_Canceled" class="columnTitle"></div>
-                    <div id="columnContent_Canceled" class="columnContent" ondrop="drop(event, 'Canceled')"
+                <div id="drag_Canceled" class="column column4">
+                    <div id="columnTitle_4" class="columnTitle"></div>
+                    <div id="columnContent_4" class="columnContent" ondrop="drop(event, '4')"
                         ondragover="allowDrop(event)" ondragleave="leaveDrop(event)"></div>
                 </div>
             </div>
@@ -218,15 +218,15 @@
                         <li><a href="#" onclick="searchTask()"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                         <li><a href="#" onclick="filterTask('All')">&nbsp;<i class="fa fa-list-alt" aria-hidden="true"
                                     title="Show all tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('To do')">&nbsp;<i class="fa fa-clone" aria-hidden="true"
+                        <li><a href="#" onclick="filterTask('0')">&nbsp;<i class="fa fa-clone" aria-hidden="true"
                                     title="Show To tasks do"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('On schedule')">&nbsp;<i class="fa fa-pencil-square-o"
+                        <li><a href="#" onclick="filterTask('1')">&nbsp;<i class="fa fa-pencil-square-o"
                                     aria-hidden="true" title="Show On schedule tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('Overdue')">&nbsp;<i class="fa fa-square-o"
+                        <li><a href="#" onclick="filterTask('2')">&nbsp;<i class="fa fa-square-o"
                                     aria-hidden="true" title="Show Overdue tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('Done')">&nbsp;<i class="fa fa-check-square-o"
+                        <li><a href="#" onclick="filterTask('3')">&nbsp;<i class="fa fa-check-square-o"
                                     aria-hidden="true" title="Show Done tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('Canceled')">&nbsp;<i class="fa fa-window-close-o"
+                        <li><a href="#" onclick="filterTask('4')">&nbsp;<i class="fa fa-window-close-o"
                                     aria-hidden="true" title="Show Canceled tasks"></i>&nbsp;</a></li>
                         <li><a href="#" onclick="filterTask('Important')">&nbsp;<i class="fa fa-flag-o"
                                     aria-hidden="true" title="Show Important tasks"></i>&nbsp;</a></li>
@@ -267,10 +267,10 @@
                         <b>Percentage: </b><span id="percentage">0</span>%<br>
                         <b>Status:</b>
                         <select id="status" type="text">
-                            <option value="Done">Done</option>
-                            <option value="On schedule">On schedule</option>
-                            <option value="Overdue">Overdue</option>
-                            <option value="Canceled">Canceled</option>
+                            <option value="3">Done / Completado</option>
+                            <option value="1">On schedule / Haciendo</option>
+                            <option value="2">Overdue / Atrazado</option>
+                            <option value="4">Canceled / Cancelado</option>
                         </select>
                     </div>
                     <br>
@@ -332,35 +332,35 @@
                             placeholder="Project status">
                     </div>
                     <div class="input-group margin-bottom-sm">
-                        Type: <input id="projectType" class="form-control" type="text"
+                        Type: <input id="newProjectType" class="form-control" type="text"
                             placeholder="Project type" readonly="readonly" value="General project">
                     </div>
                 </div>
                 <div id="verticalSeparator" class="verticalSeparator"></div>
                 <div class="modalContainer taskModal" value="empty">
                     <div class="modalSubtitle">Select project template:</div>
-                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'General project'">
+                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'General project'">
                         <i class="fa fa-file-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;General project
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Daily work'">
+                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Daily work'">
                         <i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Daily work
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Business plan'">
+                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Business plan'">
                         <i class="fa fa-file-powerpoint-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Business plan
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Research plan'">
+                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Research plan'">
                         <i class="fa fa-files-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Research plan
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Thesis organization'">
+                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Thesis organization'">
                         <i class="fa fa-file-word-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Thesis organization
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Software management'">
+                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Software management'">
                         <i class="fa fa-file-code-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Software management
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Meeting organization'">
+                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Meeting organization'">
                         <i class="fa fa-file-text fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Meeting organization
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('projectType').value = 'Party organization'">
+                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Party organization'">
                         <i class="fa fa-file-sound-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Party organization
                     </div>
                 </div>

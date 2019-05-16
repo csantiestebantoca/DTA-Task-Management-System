@@ -116,7 +116,7 @@ body {
 .projectArea {
     display: grid;
     grid-template-areas: "projectAreaLeft projectAreaLeft projectAreaRight projectAreaRight projectAreaRight"
-        "column1 column2 column3 column4 column5";
+        "column0 column1 column2 column3 column4 ";
     height: calc(100vh - 170px);
     background: rgba(255, 255, 255, .3);
     border-radius: 5px;
@@ -549,7 +549,7 @@ ul li a:hover {
 
     .projectArea {
         display: grid;
-        grid-template-areas: "projectAreaRight""projectAreaLeft""column1""column2""column3""column4""column5";
+        grid-template-areas: "projectAreaRight""projectAreaLeft""column0""column1""column2""column3""column4";
         height: 88vh;
         overflow-y: auto;
     }

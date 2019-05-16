@@ -1,7 +1,7 @@
-if('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js')
-    .then(reg => console.log('Registro de SW exitoso ', reg))
-    .catch(err => console.log('Error en registro del SW ', err))
+        .then(reg => console.log('Registro de SW exitoso ', reg))
+        .catch(err => console.log('Error en registro del SW ', err))
 }
 
 let usersList;
@@ -131,7 +131,7 @@ function register() {
             active: true
         };
         createNewUserInFB(newUser);
-    } else  {
+    } else {
         document.getElementById('registerError').style.display = 'block';
     }
 }
@@ -187,7 +187,7 @@ function showProjectsList() {
     projectsList.forEach(project => {
         let actProject = project.val();
         actProject.key = project.key;
-        if (actProject.leader == authUser.key || actProject.team.includes(authUser.key)) {
+        if (authUser && (actProject.leader == authUser.key || actProject.team.includes(authUser.key))) {
             projectTiles += createProjectTile(actProject);
         }
     });
@@ -244,45 +244,39 @@ function setProjectData() {
 }
 
 function setProjectBoard() {
-    setTaskArea('To do');
-    setTaskArea('On schedule');
-    setTaskArea('Overdue');
-    setTaskArea('Done');
-    setTaskArea('Canceled');
-}
-
-function setTaskArea(taskArea) {
-    let html = '';
-    for (let task in tasksList) {
-        let actTask = tasksList[task];
-        if (actTask.status == taskArea || (taskArea == "To do" && actTask.status == "")) {
-            let taskStatusClass = (actTask.status == "Canceled") ? "taskCanceled" : (actTask.status == "Overdue") ? "taskOverdue" : (actTask.status == "Done") ? "taskDone" : (actTask.status == "On schedule") ? "taskOnSchedule" : "";
-            let taskComment = (actTask.comments != "") ? '<i class="fa fa-comment-o" aria-hidden="true" title="Task has comments"></i>&nbsp;&nbsp;' : '';
-            let taskImportant = (actTask.important == "true") ? '<i class="fa fa-flag" aria-hidden="true" title="Important"></i>&nbsp;&nbsp;' : '';
-            let taskFavorite = (actTask.favorite == "true") ? '<i class="fa fa-star" aria-hidden="true" title="Favorite"></i>&nbsp;&nbsp;' : '';
-            html += '<div id="' + taskArea + '-' + task + '" class="taskTile ' + taskStatusClass + '" onclick="editTask(\'' + task + '\')" draggable="true" ondragstart="drag(event)">';
-            html += '   <div class="taskTitle"><b>' + task.split('_')[1] + '.-</b> ' + actTask.task + '</div>';
-            html += '   <div class="taskBar" draggable="false">';
-            html += '       <div class="taskDates" draggable="false" style="margin-top: 7px;">' + taskComment + taskImportant + taskFavorite + ' <i class="fa fa-calendar" aria-hidden="true"></i> ' + actTask.startDate + ' &nbsp;&nbsp;&nbsp;<b>' + getTaskCheckLitStatus(actTask.checkList) + '</b></div>';
-            html += '       <div class="taskResponsibles" draggable="false">' + getTaskResponsibleAvatars(actTask.responsible) + '</div>';
-            html += '   </div>';
-            html += '</div>';
+    for (let column = 0; column < 5; column++) {
+        let html = '';
+        for (let task in tasksList) {
+            let actTask = tasksList[task];
+            if (actTask.status == column || (column == 0 && actTask.status == "")) {
+                let taskStatusClass = (actTask.status == 4) ? "taskCanceled" : (actTask.status == 2) ? "taskOverdue" : (actTask.status == 3) ? "taskDone" : (actTask.status == 1) ? "taskOnSchedule" : "";
+                let taskComment = (actTask.comments != "") ? '<i class="fa fa-comment-o" aria-hidden="true" title="Task has comments"></i>&nbsp;&nbsp;' : '';
+                let taskImportant = (actTask.important == "true") ? '<i class="fa fa-flag" aria-hidden="true" title="Important"></i>&nbsp;&nbsp;' : '';
+                let taskFavorite = (actTask.favorite == "true") ? '<i class="fa fa-star" aria-hidden="true" title="Favorite"></i>&nbsp;&nbsp;' : '';
+                html += '<div id="board-' + task + '" class="taskTile ' + taskStatusClass + '" onclick="editTask(\'' + task + '\')" draggable="true" ondragstart="drag(event)">';
+                html += '   <div class="taskTitle"><b>' + task.split('_')[1] + '.-</b> ' + actTask.task + '</div>';
+                html += '   <div class="taskBar" draggable="false">';
+                html += '       <div class="taskDates" draggable="false" style="margin-top: 7px;">' + taskComment + taskImportant + taskFavorite + ' <i class="fa fa-calendar" aria-hidden="true"></i> ' + actTask.startDate + ' &nbsp;&nbsp;&nbsp;<b>' + getTaskCheckLitStatus(actTask.checkList) + '</b></div>';
+                html += '       <div class="taskResponsibles" draggable="false">' + getTaskResponsibleAvatars(actTask.responsible) + '</div>';
+                html += '   </div>';
+                html += '</div>';
+            }
         }
+        document.getElementById('columnTitle_' + column).innerHTML = actualProject.columns[column];
+        document.getElementById('columnContent_' + column).innerHTML = html;
     }
-    document.getElementById('columnTitle_' + taskArea).innerHTML = taskArea;
-    document.getElementById('columnContent_' + taskArea).innerHTML = html;
 }
 
 function setProjectTaskList() {
     let html = '';
     for (let task in tasksList) {
         let actTask = tasksList[task];
-        let taskStatusClass = (actTask.status == "Canceled") ? "taskCanceled" : (actTask.status == "Overdue") ? "taskOverdue" : (actTask.status == "Done") ? "taskDone" : (actTask.status == "On schedule") ? "taskOnSchedule" : "";
+        let taskStatusClass = (actTask.status == "4") ? "taskCanceled" : (actTask.status == "2") ? "taskOverdue" : (actTask.status == "3") ? "taskDone" : (actTask.status == "1") ? "taskOnSchedule" : "";
         let taskComment = (actTask.comments != "") ? '<i class="fa fa-comment-o" aria-hidden="true" title="Task has comments"></i>&nbsp;&nbsp;' : '';
         let taskStatus = (actTask.status != "") ? actTask.status : 'To do';
         let taskImportant = (actTask.important == "true") ? '<i class="fa fa-flag" aria-hidden="true" title="Important"></i>&nbsp;&nbsp;' : '';
         let taskFavorite = (actTask.favorite == "true") ? '<i class="fa fa-star" aria-hidden="true" title="Favorite"></i>&nbsp;&nbsp;' : '';
-        html += '<div id="taskList_' + task + '" class="taskTile ' + taskStatusClass + '" onclick="editTask(\'' + task + '\')">';
+        html += '<div id="taskList-' + task + '" class="taskTile ' + taskStatusClass + '" onclick="editTask(\'' + task + '\')">';
         html += '   <div class="taskTitle"><b>' + task.split('_')[1] + '.-</b> ' + actTask.task + '</div>';
         html += '   <div class="taskBar">';
         html += '       <div class="taskDates" style="margin-top: 7px;">[' + taskStatus + ']&nbsp;&nbsp;&nbsp;<b>' + taskComment + taskImportant + taskFavorite + ' <i class="fa fa-calendar" aria-hidden="true"></i> ' + actTask.startDate + '&nbsp;&nbsp;&nbsp;<b>' + getTaskCheckLitStatus(actTask.checkList) + '</b></div>';
@@ -296,8 +290,8 @@ function setProjectTaskList() {
 function filterTask(filter) {
     for (let task in tasksList) {
         let actTask = tasksList[task];
-        let display = (filter == "All") ? 'block' : (actTask.status == filter) ? 'block' : (actTask.status == "" && filter == "To do") ? 'block' : (actTask.important == "true" && filter == "Important") ? 'block' : (actTask.favorite == "true" && filter == "Favorite") ? 'block' : 'none';
-        document.getElementById('taskList_' + task).style.display = display;
+        let display = (filter == "All") ? 'block' : (actTask.status == filter) ? 'block' : (actTask.status == "" && filter == "0") ? 'block' : (actTask.important == "true" && filter == "Important") ? 'block' : (actTask.favorite == "true" && filter == "Favorite") ? 'block' : 'none';
+        document.getElementById('taskList-' + task).style.display = display;
     }
 }
 
@@ -357,14 +351,458 @@ function createNewProject() {
         startDate: document.getElementById('newProjectStart').value,
         endDate: document.getElementById('newProjectEnd').value,
         status: document.getElementById('newProjectStatus').value,
-        team: ""
+        team: document.getElementById('newProjectLeader').value
     }
-    createNewProjectInFB(project);
+    let projectKey = newProjectIndex;
+    createNewProjectInFB(projectKey, project);
+    addProjectMetadata(projectKey);
     showProjectSelector();
 }
 
-function createNewProjectInFB(project) {
-    firebase.database().ref("projects/" + newProjectIndex).set(project);
+function createNewProjectInFB(projectKey, project) {
+    firebase.database().ref("projects/" + projectKey).set(project);
+}
+
+function addProjectMetadata(projectKey) {
+    let projectType = document.getElementById('newProjectType').value;
+    let projectColumns = getTaskByProjectType(projectType)[0];
+    let projectTasks = getTaskByProjectType(projectType)[1];
+    firebase.database().ref("projects/" + projectKey + "/columns/").set(projectColumns);
+    firebase.database().ref("projects/" + projectKey + "/tasks/").set(projectTasks);
+}
+
+function getTaskByProjectType(projectType) {
+    let tasks;
+    switch (projectType) {
+        case "General project":
+        case "Daily work":
+            tasks = getGeneralTasks();
+            break;
+        case "Business plan":
+            tasks = getBusinessTasks();
+            break;
+        case "Research plan":
+            tasks = getResearchTasks();
+            break;
+        case "Thesis organization":
+            tasks = getThesisTasks();
+            break;
+        case "Software management":
+            tasks = getSoftwareTasks();
+            break;
+        case "Meeting organization":
+            tasks = getMeetingTasks();
+            break;
+        case "Party organization":
+            tasks = getPartyTasks();
+            break;
+    }
+    return tasks;
+}
+
+function getGeneralTasks() {
+    let columns = ["To do / Tareas", "On schedule / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Canceled / Canceladas"];
+    let tasks = {
+        task_01: {
+            task: "Task 1",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        }, task_02: {
+            task: "Task 2",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        }
+    };
+    return [columns, tasks];
+}
+
+function getBusinessTasks() {
+    let columns = ["To do / Tareas", "On schedule / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Canceled / Canceladas"];
+    let tasks = {
+        task_01: {
+            task: "Task 1",
+            area: "Cliens",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        },
+        task_02: {
+            task: "Task 1",
+            area: "Strategy",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        },
+        task_03: {
+            task: "Task 2",
+            area: "Value proposal",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        }
+    };
+    return [columns, tasks];
+}
+
+function getResearchTasks() {
+    let columns = ["To do / Tareas", "On schedule / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Canceled / Canceladas"];
+    let tasks = {
+        task_01: {
+            task: "Research problem definition / Definición del problema de Investigación",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Selection of a broad topic concerning to some topic or a research question / Selección de un tópico amplio relacionado con un tema o una pregunta de investigación",
+                "status": false
+            }, {
+                "item": "Bibliografical review / Revisión bibliográfica",
+                "status": false
+            }]
+        },
+        task_02: {
+            task: "Hypothesis formulation / Formulación de la hipótesis",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Hypothesis / Hipótesis",
+                "status": false
+            }, {
+                "item": "Variables definition and operationalization / Definición de variables y operacionalización",
+                "status": false
+            }, {
+                "item": "Objectives definition / Definición de los objetivos",
+                "status": false
+            }]
+        },
+        task_03: {
+            task: "Choose the research method / Selección del método de investigación",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        },
+        task_04: {
+            task: "Experimental design / Diseño experimental",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Variables definition and sample space / Definición de las variables y del espacio muestral",
+                "status": false
+            }, {
+                "item": "Factors definition and their levels / Definición de los factores y sus niveles",
+                "status": false
+            }, {
+                "item": "Identifying the type of experiment / Identificar el tipo de experimento",
+                "status": false
+            }]
+        },
+        task_05: {
+            task: "Data analysis / Análisis de los datos",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Perform enough replications to create a representative body of data / Realizar múltiples réplicas para lograr representatividad",
+                "status": false
+            }, {
+                "item": "Record observations and analyze what the data means / Registrar las observaciones y analizar lo que significan los datos",
+                "status": false
+            }, {
+                "item": "Prepare tables and/or graphs of the data / Preparar tablas y/o gráficas de los datos",
+                "status": false
+            }, {
+                "item": "Understand the likely distribution of your data / Analizar la distribución de los datos",
+                "status": false
+            }, {
+                "item": "Employ the exploratory and inferential analysis used in your field of science / Emplee el análisis exploratorio e inferencial utilizado en su campo de la ciencia",
+                "status": false
+            }]
+        },
+        task_06: {
+            task: "Results analysis and draw conclusions / Análisis de los resultados y llegar a conclusiones",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Experimental results analysis and evaluation / Análisis y evaluación de resultados experimentales.",
+                "status": false
+            }, {
+                "item": "Compare the results both to the original hypothesis and the conclusions of previous experiments by other researchers / Compare los resultados tanto con la hipótesis original como con las conclusiones de experimentos anteriores realizados por otros investigadores",
+                "status": false
+            }, {
+                "item": "Explain what the results mean and how to view them in the context of the scientific field or real-world environment / Explicar qué significan los resultados y cómo verlos en el contexto del campo científico o del entorno del mundo real",
+                "status": false
+            }, {
+                "item": "Make suggestions for future research / Hacer sugerencias para investigaciones futuras",
+                "status": false
+            }]
+        },
+        task_07: {
+            task: "Write the results / Escribir los resultados",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        }
+    };
+    return [columns, tasks];
+}
+
+function getThesisTasks() {
+    let columns = ["To do / Tareas", "Doing / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Review / Revisión"];
+    let tasks = {
+        task_01: {
+            task: "Task 1",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        },
+        task_02: {
+            task: "Task 2",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        }
+    };
+    return [columns, tasks];
+}
+
+function getSoftwareTasks() {
+    let columns = ["Backlog / Requerimientos", "Doing / Haciendo", "Overdue / Pendientes", "Revision / Revisión", "Delivery / Entrega"];
+    let tasks = {
+        task_01: {
+            task: "Task 1",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        },
+        task_02: {
+            task: "Task 2",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        }
+    };
+    return [columns, tasks];
+}
+
+function getMeetingTasks() {
+    let columns = ["To do / Tareas", "On schedule / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Canceled / Canceladas"];
+    let tasks = {
+        task_01: {
+            task: "Meeteing preparation / Preparación de la reunión",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Objective definition / Definir los objetivos",
+                "status": false
+            }, {
+                "item": "Meeteing agenda / Agenda de la reunión",
+                "status": false
+            }, {
+                "item": "Define place, date and time / Definir lugar, fecha y hora",
+                "status": false
+            }, {
+                "item": "Send call / Enviar convocatoria",
+                "status": false
+            }]
+        }, task_02: {
+            task: "Meeteing organization / Organización de la reunión",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Define time controller / Definir controlador de tiempo",
+                "status": false
+            }, {
+                "item": "Define who writes the memory of the meeting / Definir quién escribe la memoria de la reunión",
+                "status": false
+            }]
+        }, task_03: {
+            task: "Informations / Informaciones",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Analyze agreements of the previous meeting / Analizar acuerdos de la reunión anterior",
+                "status": false
+            }, {
+                "item": "Discussion / Discusión",
+                "status": false
+            }, {
+                "item": "Making agreements / Toma de acuerdos",
+                "status": false
+            }]
+        }
+    };
+    return [columns, tasks];
+}
+
+function getPartyTasks() {
+    let columns = ["To do / Tareas", "On schedule / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Canceled / Canceladas"];
+    let tasks = {
+        task_01: {
+            task: "Invitations / Invitaciones",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Guest List / Lista de invitados",
+                "status": false
+            }, {
+                "item": "Print invitations / Imprimir invitaciones",
+                "status": false
+            }, {
+                "item": "Deliver invitations / Entregar invitaciones",
+                "status": false
+            }]
+        }, task_02: {
+            task: "Food and drink / Comidas y bebidas",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        }, task_03: {
+            task: "Music and entertainment / Música y entretenimiento",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: ""
+        }, task_04: {
+            task: "Budget / Presupuesto",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Rental / Alquiler ",
+                "status": false
+            }, {
+                "item": "Decoration / Decoración",
+                "status": false
+            }, {
+                "item": "Food and drink / Comidas y bebidas",
+                "status": false
+            }, {
+                "item": "Others / Otros",
+                "status": false
+            }]
+        }
+    };
+    return [columns, tasks];
 }
 
 // #endregion
@@ -629,7 +1067,7 @@ function searchTask() {
     for (let task in tasksList) {
         let taskText = tasksList[task].task.toUpperCase();
         let display = (taskText.includes(search.toUpperCase()) || search == "") ? 'block' : 'none';
-        document.getElementById('taskList_' + task).style.display = display;
+        document.getElementById('taskList-' + task).style.display = display;
     }
 }
 
