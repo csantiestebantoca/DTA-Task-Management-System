@@ -971,8 +971,8 @@ function getCheckListHTML(taskKey, checkList) {
                         <span type="text" contenteditable="true">${checkList[i].item}</span>
                     </td>
                     <td valign="top" width="10%" align="right">
-                        <i class="fa fa-id-card-o checkItemOptions" aria-hidden="true" title="Convert to task..."></i>
-                        <b><span onclick="deleteCheckList('${taskKey}','${i}')" class="checkItemOptions" title="Delete...">&nbsp;&times;&nbsp;</span></b>
+                        <!--<i class="fa fa-id-card-o checkItemOptions" aria-hidden="true" onclick="convetCheckItemToTask('${taskKey}','${i}')" title="Convert to task..."></i>-->
+                        <b><span onclick="deleteCheckItem('${taskKey}','${i}')" class="checkItemOptions" title="Delete...">&nbsp;&times;&nbsp;</span></b>
                     </td>
                 </tr>
             </table>
@@ -981,7 +981,12 @@ function getCheckListHTML(taskKey, checkList) {
     return result;
 }
 
-function deleteCheckList(taskKey, checkListKey) {
+function convetCheckItemToTask(taskKey, checkListKey) {
+    calculatePercentage();
+    //firebase.database().ref("projects/" + actualProject.key + "/tasks/" + taskKey + "/checkList/" + checkListKey).remove();
+}
+
+function deleteCheckItem(taskKey, checkListKey) {
     calculatePercentage();
     firebase.database().ref("projects/" + actualProject.key + "/tasks/" + taskKey + "/checkList/" + checkListKey).remove();
 }
@@ -1270,13 +1275,13 @@ function getChartData(tasksList) {
             case "":
                 result[0]++;
                 break;
-            case "3":
+            case "1":
                 result[1]++;
                 break;
-            case "1":
+            case "2":
                 result[2]++;
                 break;
-            case "2":
+            case "3":
                 result[3]++;
                 break;
             case "4":
@@ -1300,14 +1305,14 @@ function getTaskStatusByUser() {
         name: actualProject.columns[0],
         data: getUserTasks('')
     }, {
-        name: actualProject.columns[3],
-        data: getUserTasks('3')
-    }, {
         name: actualProject.columns[1],
         data: getUserTasks('1')
     }, {
         name: actualProject.columns[2],
         data: getUserTasks('2')
+    }, {
+        name: actualProject.columns[3],
+        data: getUserTasks('3')
     }, {
         name: actualProject.columns[4],
         data: getUserTasks('4')
