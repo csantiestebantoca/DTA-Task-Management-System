@@ -183,7 +183,7 @@ body {
 }
 
 .columnContent {
-    height: 68vh;
+    height: calc(100vh - 210px);
     overflow-y: auto;
 }
 
@@ -548,6 +548,11 @@ ul li a:hover {
     float: right;
     margin-right: 30px;
     font-size: .7em;
+}
+
+.filterBarItem {
+    margin: 0px;
+    padding: 10px 0px;
 }
 
 .taskModal {

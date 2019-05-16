@@ -216,22 +216,21 @@
                         <li><input id="searchTask" type="text" onkeyup="searchTask()"
                                 style="margin-bottom: 0px; margin-top: 3px; background: transparent;"
                                 placeholder="Search..."></li>
-                        <li><a href="#" onclick="searchTask()"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="#" onclick="filterTask('All')">&nbsp;<i class="fa fa-list-alt" aria-hidden="true"
-                                    title="Show all tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('0')">&nbsp;<i class="fa fa-clone" aria-hidden="true"
-                                    title="Show To tasks do"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('1')">&nbsp;<i class="fa fa-pencil-square-o"
+                        <li><a href="#" onclick="filterTask('All')">&nbsp;<i class="fa fa-list-alt filterBarItem"
+                                    aria-hidden="true" title="Show all tasks"></i>&nbsp;</a></li>
+                        <li><a href="#" onclick="filterTask('0')">&nbsp;<i class="fa fa-clone filterBarItem"
+                                    aria-hidden="true" title="Show To tasks do"></i>&nbsp;</a></li>
+                        <li><a href="#" onclick="filterTask('1')">&nbsp;<i class="fa fa-pencil-square-o filterBarItem"
                                     aria-hidden="true" title="Show On schedule tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('2')">&nbsp;<i class="fa fa-square-o"
+                        <li><a href="#" onclick="filterTask('2')">&nbsp;<i class="fa fa-square-o filterBarItem"
                                     aria-hidden="true" title="Show Overdue tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('3')">&nbsp;<i class="fa fa-check-square-o"
+                        <li><a href="#" onclick="filterTask('3')">&nbsp;<i class="fa fa-check-square-o filterBarItem"
                                     aria-hidden="true" title="Show Done tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('4')">&nbsp;<i class="fa fa-window-close-o"
+                        <li><a href="#" onclick="filterTask('4')">&nbsp;<i class="fa fa-window-close-o filterBarItem"
                                     aria-hidden="true" title="Show Canceled tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('Important')">&nbsp;<i class="fa fa-flag-o"
+                        <li><a href="#" onclick="filterTask('Important')">&nbsp;<i class="fa fa-flag-o filterBarItem"
                                     aria-hidden="true" title="Show Important tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('Favorite')">&nbsp;<i class="fa fa-star-o"
+                        <li><a href="#" onclick="filterTask('Favorite')">&nbsp;<i class="fa fa-star-o filterBarItem"
                                     aria-hidden="true" title="Show Favorite tasks"></i>&nbsp;</a></li>
                     </ul>
                 </div>
@@ -246,8 +245,7 @@
                 <div class="modalContainer">
                     <div>
                         <b><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Task title:</b>
-                        <div id="task" type="text" class="inputData"
-                            contenteditable="true"></div>
+                        <div id="task" type="text" class="inputData" contenteditable="true"></div>
                     </div>
                     <br>
                     <div>
@@ -333,35 +331,43 @@
                             placeholder="Project status">
                     </div>
                     <div class="input-group margin-bottom-sm">
-                        Type: <input id="newProjectType" class="form-control" type="text"
-                            placeholder="Project type" readonly="readonly" value="General project">
+                        Type: <input id="newProjectType" class="form-control" type="text" placeholder="Project type"
+                            readonly="readonly" value="General project">
                     </div>
                 </div>
                 <div id="verticalSeparator" class="verticalSeparator"></div>
                 <div class="modalContainer taskModal" value="empty">
                     <div class="modalSubtitle">Select project template:</div>
-                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'General project'">
+                    <div class="projectTypeItem"
+                        onclick="document.getElementById('newProjectType').value = 'General project'">
                         <i class="fa fa-file-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;General project
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Daily work'">
+                    <div class="projectTypeItem"
+                        onclick="document.getElementById('newProjectType').value = 'Daily work'">
                         <i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Daily work
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Business plan'">
+                    <div class="projectTypeItem"
+                        onclick="document.getElementById('newProjectType').value = 'Business plan'">
                         <i class="fa fa-file-powerpoint-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Business plan
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Research plan'">
+                    <div class="projectTypeItem"
+                        onclick="document.getElementById('newProjectType').value = 'Research plan'">
                         <i class="fa fa-files-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Research plan
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Thesis organization'">
+                    <div class="projectTypeItem"
+                        onclick="document.getElementById('newProjectType').value = 'Thesis organization'">
                         <i class="fa fa-file-word-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Thesis organization
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Software management'">
+                    <div class="projectTypeItem"
+                        onclick="document.getElementById('newProjectType').value = 'Software management'">
                         <i class="fa fa-file-code-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Software management
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Meeting organization'">
+                    <div class="projectTypeItem"
+                        onclick="document.getElementById('newProjectType').value = 'Meeting organization'">
                         <i class="fa fa-file-text fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Meeting organization
                     </div>
-                    <div class="projectTypeItem" onclick="document.getElementById('newProjectType').value = 'Party organization'">
+                    <div class="projectTypeItem"
+                        onclick="document.getElementById('newProjectType').value = 'Party organization'">
                         <i class="fa fa-file-sound-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Party organization
                     </div>
                 </div>
