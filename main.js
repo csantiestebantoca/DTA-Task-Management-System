@@ -195,11 +195,21 @@ function showProjectsList() {
 }
 
 function createProjectTile(project) {
-    let html = '';
-    html += '<div class="projectBox">';
-    html += '<div class="projectBoxName" onclick="selectProject(\'' + project.key + '\')">' + project.name + '</div>';
-    html += '</div>';
-    return html;
+    return `
+        <div class="projectBox" onclick="selectProject('${project.key}')">
+            <div class="projectBoxName">${project.name}</div>
+            <div>
+                <i class="fa fa-trash-o deleteProjectIcon" aria-hidden="true" onclick="deleteProject('${project.key}', '${project.name}')" title="Delete project"></i>
+            </div>
+        </div>
+    `;
+}
+
+function deleteProject(projectKey, projectName) {
+    let confirmDelete = confirm(`The project "${projectName}" will be deleted`);
+    if (confirmDelete == true) {
+        firebase.database().ref("projects/" + projectKey).remove();
+    }
 }
 
 function selectProject(projectKey) {
@@ -959,8 +969,8 @@ function markTaskAsFavorite() {
 
 function getCheckListHTML(taskKey, checkList) {
     let result = "";
-    for (let i in checkList) {
-        let status = (checkList[i].status) ? "checked" : "";
+    for (let index in checkList) {
+        let status = (checkList[index].status) ? "checked" : "";
         result += `
             <table class="checkItemTable">
                 <tr class="checkItem">
@@ -968,11 +978,11 @@ function getCheckListHTML(taskKey, checkList) {
                         <input type="checkbox" class="checkboxControl" onclick="calculatePercentage()" ${status}>
                     </td>
                     <td valign="top" width="85%" align="justify">
-                        <span type="text" contenteditable="true">${checkList[i].item}</span>
+                        <span class="checkListItem" type="text" contenteditable="true">${checkList[index].item}</span>
                     </td>
                     <td valign="top" width="10%" align="right">
-                        <!--<i class="fa fa-id-card-o checkItemOptions" aria-hidden="true" onclick="convetCheckItemToTask('${taskKey}','${i}')" title="Convert to task..."></i>-->
-                        <b><span onclick="deleteCheckItem('${taskKey}','${i}')" class="checkItemOptions" title="Delete...">&nbsp;&times;&nbsp;</span></b>
+                        <!--<i class="fa fa-id-card-o checkItemOptions" aria-hidden="true" onclick="convetCheckItemToTask('${taskKey}','${index}')" title="Convert to task..."></i>-->
+                        <b><span onclick="deleteCheckItem('${taskKey}','${index}')" class="checkItemOptions" title="Delete...">&nbsp;&times;&nbsp;</span></b>
                     </td>
                 </tr>
             </table>
@@ -988,6 +998,7 @@ function convetCheckItemToTask(taskKey, checkListKey) {
 
 function deleteCheckItem(taskKey, checkListKey) {
     calculatePercentage();
+    // Mecanismo para mantener abierta la ventana activa durante la actualización
     firebase.database().ref("projects/" + actualProject.key + "/tasks/" + taskKey + "/checkList/" + checkListKey).remove();
 }
 
@@ -1006,11 +1017,11 @@ function calculatePercentage() {
     }
     document.getElementById("percentage").innerHTML = parseInt(result);
     if (parseInt(result) == 100) {
-        document.getElementById("status").value = "Done";
+        document.getElementById("status").value = "3";
     } else if (endDate < new Date()) {
-        document.getElementById("status").value = "Overdue";
+        document.getElementById("status").value = "2";
     } else {
-        document.getElementById("status").value = "On schedule";
+        document.getElementById("status").value = "1";
     }
 }
 
@@ -1024,7 +1035,7 @@ function updateTask() {
         endDate: document.getElementById("endDate").value,
         percentage: document.getElementById("percentage").innerHTML,
         comments: document.getElementById("comments").innerHTML,
-        //area: document.getElementById("area").value,
+        area: document.getElementById("area").value,
         status: document.getElementById("status").value,
         //repeat: document.getElementById("repeat").value,
         checkList: getTaskCheckList(),
@@ -1036,7 +1047,7 @@ function updateTask() {
 
 function getTaskCheckList() {
     let checkList = [];
-    let checkListCheckeds = document.getElementById('checkList').getElementsByClassName('checkListChecked');
+    let checkListCheckeds = document.getElementById('checkList').getElementsByClassName('checkboxControl');
     let checkListItems = document.getElementById('checkList').getElementsByClassName('checkListItem');
     for (let i = 0; i < checkListItems.length; i++) {
         let item = {
@@ -1073,8 +1084,27 @@ function newCheckListItemPressed() {
 }
 
 function addNewCheckListItem() {
+    let taskKey = document.getElementById("key").value;
     let newItem = document.getElementById('newCheckListItem').value;
-    let itemHTML = '<input type="checkbox" class="checkListChecked" value="' + newItem + '" style="width:20px;"> <span type="text" class="checkListItem inputData" contenteditable="true">' + newItem + '</span><br>';
+    let index = document.getElementsByClassName('checkItemTable').length;
+    //let itemHTML = '<input type="checkbox" class="checkListChecked" value="' + newItem + '" style="width:20px;"> <span type="text" class="checkListItem inputData" contenteditable="true">' + newItem + '</span><br>';
+    let itemHTML = `
+        <table class="checkItemTable">
+            <tr class="checkItem">
+                <td valign="top" width="5%">
+                    <input type="checkbox" class="checkboxControl" onclick="calculatePercentage()" value="${newItem}">
+                </td>
+                <td valign="top" width="85%" align="justify">
+                    <span class="checkListItem" type="text" contenteditable="true">${newItem}</span>
+                </td>
+                <td valign="top" width="10%" align="right">
+                    <!--<i class="fa fa-id-card-o checkItemOptions" aria-hidden="true" onclick="convetCheckItemToTask('${taskKey}','${index}')" title="Convert to task..."></i>-->
+                    <b><span onclick="deleteCheckItem('${taskKey}','${index}')" class="checkItemOptions" title="Delete...">&nbsp;&times;&nbsp;</span></b>
+                </td>
+            </tr>
+        </table>
+    `;
+
     document.getElementById('checkList').innerHTML += itemHTML;
     document.getElementById('newCheckListItem').value = "";
 }

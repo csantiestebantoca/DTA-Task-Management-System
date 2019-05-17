@@ -9,7 +9,7 @@
     <meta name="keywords" content="Planning system, task management, kanbas, task list">
     <meta name="author" content="DTA Labs (Laboratorio de Desarrollos Tecnologógicos Avanzados)">
 
-    <title>Tasks Management System</title>
+    <title>EasyTasks</title>
 
     <!-- Optimización para móviles -->
     <meta name="theme-color" content="#0000EF">
@@ -247,7 +247,6 @@
                         <b><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Task title:</b>
                         <div id="task" type="text" class="inputData" contenteditable="true"></div>
                     </div>
-                    <br>
                     <div>
                         <b>Responsibles:</b><br>
                         <input id="responsible" type="hidden">
@@ -261,7 +260,6 @@
                         <input id="startDate" type="date" style="width: 130px;"> - <input id="endDate" type="date"
                             style="width: 130px;">
                     </div>
-                    <br>
                     <div>
                         <b>Percentage: </b><span id="percentage">0</span>%<br>
                         <b>Status:</b>
@@ -279,13 +277,11 @@
                         <input type="text" id="newCheckListItem" name="newCheckListItem" placeholder="Enter new item..."
                             onkeypress="newCheckListItemPressed()"><br>
                     </div>
-                    <br>
                     <div>
                         <div><b><i class="fa fa-comment-o" aria-hidden="true"></i> Comments:</b></div>
                         <div id="comments" class="inputData" contenteditable="true">
                         </div>
                     </div>
-                    <br>
                     <div class="taskMarkers">
                         <i id="taskImportant" class="fa fa-flag-o" aria-hidden="true" onclick="markTaskAsImportant()"
                             style="cursor: pointer" title="Mark as important"></i>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -293,7 +289,7 @@
                             style="cursor: pointer" title="Mark as favorite"></i>
                     </div>
                     <div>
-                        Area: <input id="area" type="text"><br>
+                        <b>Area:</b> <input id="area" type="text"><br>
                         <!--Repeat: <input id="repeat" type="text"><br>-->
                     </div>
                     <input id="key" type="hidden">

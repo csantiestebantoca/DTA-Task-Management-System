@@ -160,6 +160,13 @@ body {
     font-size: .8em;
 }
 
+.deleteProjectIcon {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 1.2em;
+}
+
 /* #endregion */
 
 /* #region Columns*/
@@ -229,7 +236,8 @@ body {
     font-size: 1.5em;
     height: 67vh;
     overflow-y: auto;
-    margin-left: 3%;
+    margin-left: 3%;    
+    width: 97%;
 }
 
 .taskTitle {
@@ -328,14 +336,14 @@ body {
 
 .projectBox {
     position: relative;
-    top: 50px;
+    top: 20px;
     background: #f6f6f6;
     border-radius: 5px;
     width: 200px;
     height: 200px;
     text-align: center;
     float: left;
-    margin-left: 40px;
+    margin: 20px 30px;
     cursor: pointer;
     display: flex;
     border: 1px solid blue;
