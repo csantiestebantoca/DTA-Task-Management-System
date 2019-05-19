@@ -251,7 +251,7 @@ body {
     font-size: 1.5em;
     height: 67vh;
     overflow-y: auto;
-    margin-left: 3%;    
+    margin-left: 3%;
     width: 97%;
 }
 
@@ -476,10 +476,6 @@ input,
     width: 235px;
 }
 
-button {
-    margin-left: 10px !important;
-}
-
 /* #endregion */
 
 /* #region Menu */
@@ -622,8 +618,10 @@ ul li a:hover {
 /* #endregion */
 
 /* #region Responsive */
+@media screen and (max-width: 320px) {
+}
 
-@media only screen and (max-width: 640px) {
+@media screen and (max-width: 640px) {
     .container {
         padding-top: 50px;
     }
@@ -632,6 +630,18 @@ ul li a:hover {
         top: 45px;
     }
 
+    button {
+        width: 55px;
+    }
+
+    .header-main {
+        margin-top: -5px;
+        font-size: 1em;
+        width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
     .projectArea {
         display: grid;
         grid-template-areas: "projectAreaRight""projectAreaLeft""column0""column1""column2""column3""column4";
@@ -678,11 +688,6 @@ ul li a:hover {
         height: 23px;
     }
 
-    .header-main {
-        margin-top: -5px;
-        font-size: 1em;
-    }
-
     .projectName {
         font-size: .7em;
     }
@@ -700,8 +705,8 @@ ul li a:hover {
     }
 
     .modalWindow {
-        width: calc(100vw/2 + 100vw/4);
-        left: calc(100vw/8);
+        width: 90%;
+        left: 5%;
         font-size: .7em;
     }
 }

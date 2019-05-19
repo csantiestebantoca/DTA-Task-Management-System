@@ -17,6 +17,7 @@ let showChat = false;
 let viewIndex = 1;
 
 window.onload = function () {
+    viewIndex = (screen.width > 480) ? 1 : 2;
     initializeFirebase();
     initializeUI();
     loadUsersFromFB();
@@ -121,7 +122,7 @@ function login(userMail, userPassword) {
     });
     if (authUser) {
         let avatar = (authUser.picture && authUser.picture != '') ? "<img id='userAvatar' src='" + authUser.picture + "' class='avatar'>" : "<i class='fa fa-user-circle-o fa-2x' style='color:white'></i>";
-        document.getElementById('userOptions').innerHTML = "<span id='userName'>" + authUser.name + " </span>" + avatar;
+        document.getElementById('userOptions').innerHTML = "<span id='userName'>" + authUser.name.split(' ')[0] + " </span>" + avatar;
         showProjectSelector();
     } else {
         document.getElementById('loginError').style.display = 'block';
@@ -333,7 +334,7 @@ function setProjectTaskList() {
         let actTask = tasksList[task];
         let taskStatusClass = (actTask.status == "4") ? "taskCanceled" : (actTask.status == "2") ? "taskOverdue" : (actTask.status == "3") ? "taskDone" : (actTask.status == "1") ? "taskOnSchedule" : "";
         let taskComment = (actTask.comments != "") ? '<i class="fa fa-comment-o" aria-hidden="true" title="Task has comments"></i>&nbsp;&nbsp;' : '';
-        let taskStatus = (actTask.status != "") ? actTask.status : 'To do';
+        let taskStatus = '<i class="fa ' + ((actTask.status == "1") ? 'fa-pencil-square-o' : (actTask.status == "2") ? 'fa-square-o' : (actTask.status == "3") ? 'fa-check-square-o' : (actTask.status == "4") ? 'fa-window-close-o' : 'fa-clone') + '" aria-hidden="true" title="' + ((actTask.status != '') ? actualProject.columns[actTask.status] : 'To-do') + '"></i>';
         let taskImportant = (actTask.important == "true") ? '<i class="fa fa-flag" aria-hidden="true" title="Important"></i>&nbsp;&nbsp;' : '';
         let taskFavorite = (actTask.favorite == "true") ? '<i class="fa fa-star" aria-hidden="true" title="Favorite"></i>&nbsp;&nbsp;' : '';
         html += '<div id="taskList-' + task + '" class="taskTile ' + taskStatusClass + '" onclick="editTask(\'' + task + '\')">';
@@ -342,7 +343,7 @@ function setProjectTaskList() {
         html += getCheckListHTML(task, actTask.checkList);
         html += '   </div>';
         html += '   <div class="taskBar">';
-        html += '       <div class="taskDates" style="margin-top: 7px;">[' + actualProject.columns[taskStatus] + ']&nbsp;&nbsp;&nbsp;<b>' + taskComment + taskImportant + taskFavorite + ' <i class="fa fa-calendar" aria-hidden="true"></i> ' + actTask.startDate + '&nbsp;&nbsp;&nbsp;</b>' + getTaskCheckLitStatus(actTask.checkList) + '</b></div>';
+        html += '       <div class="taskDates" style="margin-top: 7px;">' + taskStatus + '&nbsp;&nbsp;&nbsp;<b>' + taskComment + taskImportant + taskFavorite + ' <i class="fa fa-calendar" aria-hidden="true"></i> ' + actTask.startDate + '&nbsp;&nbsp;&nbsp;</b>' + getTaskCheckLitStatus(actTask.checkList) + '</b></div>';
         html += '       <div class="taskResponsibles">' + getTaskResponsibleAvatars(actTask.responsible) + '</div>';
         html += '   </div>';
         html += '</div>';
@@ -465,7 +466,7 @@ function getTaskByProjectType(projectType) {
 }
 
 function getGeneralTasks() {
-    let columns = ["To do / Tareas", "On schedule / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Canceled / Canceladas"];
+    let columns = ["To-do/Tareas", "Doing/Haciendo", "Overdue/Atrasadas", "Done/Completadas", "Canceled/Canceladas"];
     let tasks = {
         task_01: {
             task: "Task 1",
@@ -494,7 +495,7 @@ function getGeneralTasks() {
 }
 
 function getBusinessTasks() {
-    let columns = ["To do / Tareas", "On schedule / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Canceled / Canceladas"];
+    let columns = ["To-do/Tareas", "Doing/Haciendo", "Overdue/Atrasadas", "Done/Completadas", "Canceled/Canceladas"];
     let tasks = {
         task_01: {
             task: "Task 1",
@@ -534,7 +535,7 @@ function getBusinessTasks() {
 }
 
 function getResearchTasks() {
-    let columns = ["To do / Tareas", "On schedule / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Canceled / Canceladas"];
+    let columns = ["To-do/Tareas", "Doing/Haciendo", "Overdue/Atrasadas", "Done/Completadas", "Canceled/Canceladas"];
     let tasks = {
         task_01: {
             task: "Research problem definition / Definición del problema de Investigación",
@@ -674,7 +675,7 @@ function getResearchTasks() {
 }
 
 function getThesisTasks() {
-    let columns = ["To do / Tareas", "Doing / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Review / Revisión"];
+    let columns = ["To-do/Tareas", "Doing/Haciendo", "Overdue/Atrasadas", "Done/Completadas", "Review/Revisión"];
     let tasks = {
         task_01: {
             task: "Task 1",
@@ -703,7 +704,7 @@ function getThesisTasks() {
 }
 
 function getSoftwareTasks() {
-    let columns = ["Backlog / Requerimientos", "Doing / Haciendo", "Overdue / Pendientes", "Revision / Revisión", "Delivery / Entrega"];
+    let columns = ["Backlog/Requerimientos", "Doing/Haciendo", "Overdue/Pendientes", "Review/Revisión", "Delivery/Entrega"];
     let tasks = {
         task_01: {
             task: "Task 1",
@@ -732,7 +733,7 @@ function getSoftwareTasks() {
 }
 
 function getMeetingTasks() {
-    let columns = ["To do / Tareas", "On schedule / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Canceled / Canceladas"];
+    let columns = ["To-do/Tareas", "Doing/Haciendo", "Overdue/Atrasadas", "Done/Completadas", "Canceled/Canceladas"];
     let tasks = {
         task_01: {
             task: "Meeteing preparation / Preparación de la reunión",
@@ -802,7 +803,7 @@ function getMeetingTasks() {
 }
 
 function getPartyTasks() {
-    let columns = ["To do / Tareas", "On schedule / Haciendo", "Overdue / Atrazadas", "Done / Completadas", "Canceled / Canceladas"];
+    let columns = ["To-do/Tareas", "Doing/Haciendo", "Overdue/Atrasadas", "Done/Completadas", "Canceled/Canceladas"];
     let tasks = {
         task_01: {
             task: "Invitations / Invitaciones",

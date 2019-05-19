@@ -144,7 +144,7 @@
 
         <div id="register" class="login" style="display: none; margin-top: -40px;">
             <div class="modalHeader">
-                Register new account
+                User profile
             </div>
             <div class="modalBody">
                 <div class="input-group margin-bottom-sm">
@@ -296,10 +296,10 @@
                         <b>Percentage: </b><span id="percentage">0</span>%<br>
                         <b>Status:</b>
                         <select id="status" type="text">
-                            <option value="3">Done / Completado</option>
-                            <option value="1">On schedule / Haciendo</option>
-                            <option value="2">Overdue / Atrazado</option>
-                            <option value="4">Canceled / Cancelado</option>
+                            <option value="3">Done/Completado</option>
+                            <option value="1">Doing/Haciendo</option>
+                            <option value="2">Overdue/Atrasado</option>
+                            <option value="4">Canceled/Cancelado</option>
                         </select>
                     </div>
                     <br>
@@ -438,7 +438,7 @@
 
         <div id="optionsSideBar" class="optionsBar" style="display: none">
             <ul id="usersOptionsSideBar">
-                <li><a href="#" onclick="showUserProfile()">
+                <li><a href="#" onclick="closeAllWindows();document.getElementById('register').style.display = 'block'">
                         <i class="fa fa-user-circle-o" aria-hidden="true"></i> My profile...
                     </a>
                 </li>
