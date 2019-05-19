@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -49,7 +49,7 @@
                 <span>Easy Tasks</span>
                 <span id="projectName" class="projectName">Make your work easy</span>
             </div>
-            <div id="userOptions" class="userOptions"></div>
+            <div id="userOptions" class="userOptions" onclick="toggleUserOptions()"></div>
         </div>
         <div id="optionsButtons" class="optionsButtons">
             <nav style="float: left;">
@@ -86,7 +86,7 @@
                             <i class="fa fa-comment-o" aria-hidden="true"></i> Mesenger
                         </a>
                     </li>
-                    <li><a href="#" onclick="addNewTask()">
+                    <li><a href="#" onclick="showProjectSettings()">
                             <i class="fa fa-cog" aria-hidden="true"></i> Settings
                         </a>
                     </li>
@@ -103,11 +103,14 @@
             </div>
             <div class="modalBody">
                 <div class="input-group margin-bottom-sm">
-                    <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></span>
+                    <label for="userMail"><span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"
+                                aria-hidden="true"></i></span></label>
                     <input id="userMail" class="form-control" type="text" placeholder="Email address" autofocus>
                 </div>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+                    </span>
+                    <label for="userPassword"><span class="input-group-addon"><i class="fa fa-key fa-fw"
+                                aria-hidden="true"></i></label>
                     <input id="userPassword" class="form-control" type="password" placeholder="Password"
                         onkeypress="pswKeyPressed()">
                 </div>
@@ -120,31 +123,60 @@
             </div>
         </div>
 
+        <div id="invitation" class="login" style="display: none;">
+            <div class="modalHeader">
+                Invite a user
+            </div>
+            <div class="modalBody">
+                <div class="input-group margin-bottom-sm">
+                    <label for="invitedUserMail"><span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"
+                                aria-hidden="true"></i></span></label>
+                    <input id="invitedUserMail" class="form-control" type="text" placeholder="User email address"
+                        autofocus>
+                </div>
+                <p id="invitationError" style="color: red; display: none">Please, select a project first to join!!!</p>
+            </div>
+            <div class="modalFooter">
+                <button onclick="closeAllWindows();showProjectSelector();">Cancel</button>
+                <button onclick="sendUserInvitation()">Send</button>
+            </div>
+        </div>
+
         <div id="register" class="login" style="display: none; margin-top: -40px;">
             <div class="modalHeader">
                 Register new account
             </div>
             <div class="modalBody">
                 <div class="input-group margin-bottom-sm">
-                    <span class="input-group-addon"><i class="fa fa-terminal fa-fw" aria-hidden="true"></i></span>
+                    <label for="setUserName">
+                        <span class="input-group-addon"><i class="fa fa-terminal fa-fw" aria-hidden="true"></i></span>
+                    </label>
                     <input id="setUserName" class="form-control" type="text" placeholder="User name" autofocus>
                 </div>
                 <div class="input-group margin-bottom-sm">
-                    <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></span>
+                    <label for="setUserMail">
+                        <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></span>
+                    </label>
                     <input id="setUserMail" class="form-control" type="email" placeholder="Email address" autofocus>
                 </div>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+                    <label for="setUserPassword">
+                        <span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+                    </label>
                     <input id="setUserPassword" class="form-control" type="password" placeholder="Set password"
                         onkeypress="pswKeyPressed()">
                 </div>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+                    <label for="confirmUserPassword">
+                        <span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+                    </label>
                     <input id="confirmUserPassword" class="form-control" type="password" placeholder="Confirm password"
                         onkeypress="pswKeyPressed()">
                 </div>
                 <div class="input-group margin-bottom-sm">
-                    <span class="input-group-addon"><i class="fa fa-users fa-fw" aria-hidden="true"></i></span>
+                    <label for="setUserRole">
+                        <span class="input-group-addon"><i class="fa fa-users fa-fw" aria-hidden="true"></i></span>
+                    </label>
                     <input id="setUserRole" class="form-control" type="text" placeholder="Type your role" autofocus>
                 </div>
                 <p id="registerError" style="color: red; display: none">Password check incorrect or Error mail
@@ -404,7 +436,70 @@
             </div>
         </div>
 
-        <div id="optionsButtons2" class="buttons" style="display:none;">
+        <div id="optionsSideBar" class="optionsBar" style="display: none">
+            <ul id="usersOptionsSideBar">
+                <li><a href="#" onclick="showUserProfile()">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> My profile...
+                    </a>
+                </li>
+                <li><a href="#" onclick="showInvitationWindow()">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i> Invite user...
+                    </a>
+                </li>
+                <li><a href="#" onclick="location.reload();">
+                        <i class="fa fa-user-times" aria-hidden="true"></i> Logout
+                    </a>
+                </li>
+            </ul>
+            <ul id="projectOptionsSideBar" style="display:none;">
+                <li>
+                    <hr style="width: 120px;">
+                </li>
+                <li><a href="#" onclick="addNewTask()">
+                        <i class="fa fa-plus-square" aria-hidden="true"></i> New Task
+                    </a>
+                </li>
+                <li>
+                    <hr style="width: 120px;">
+                </li>
+                <li><a href="#" onclick="showProjectSelector()">
+                        <i class="fa fa-home" aria-hidden="true"></i> My projects
+                    </a>
+                </li>
+                <li><a href="#" onclick="showSelectedProject()">
+                        <i class="fa fa-columns" aria-hidden="true"></i> Board
+                    </a>
+                </li>
+                <li><a href="#" onclick="showProjectTaskList()">
+                        <i class="fa fa-list-alt" aria-hidden="true"></i> Task List
+                    </a>
+                </li>
+                <!--li><a href="#" onclick="showProjectSelector()">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i> Calendar
+                                                </a>
+                                            </li-->
+                <li><a href="#" onclick="openProjectInfo()">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i> Statistics
+                    </a>
+                </li>
+                <li>
+                    <hr style="width: 120px;">
+                </li>
+                <li><a href="#" onclick="showMessenger()">
+                        <i class="fa fa-comment-o" aria-hidden="true"></i> Mesenger
+                    </a>
+                </li>
+                <li>
+                    <hr style="width: 120px;">
+                </li>
+                <li><a href="#" onclick="showProjectSettings()">
+                        <i class="fa fa-cog" aria-hidden="true"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!--<div id="optionsButtons2" class="buttons" style="display:none;">
             <div class="btnCircular btnAddTask" onclick="addNewTask()" title="Add new task"><img src="./plus.png"
                     class="newIcon"></div>
             <div class="btnCircular btnProjects" onclick="showProjectSelector()" title="Show projects"><img
@@ -413,14 +508,15 @@
                     class="newIcon"></div>
             <div class="btnCircular btnVideoChat" onclick="showVideoChat()" title="Video chat"><img src="./video.png"
                     class="newIcon"></div>
-        </div>
+        </div>-->
 
     </div>
 
     <div class="footer">
-        &copy; 2019 by DTA Labs <i>[Laboratorio de Desarrollos Tecnológicos Avanzados]</i>. All rights
-        reserved. <a href="https://www.dwrobelconsulting.com">Powered by DWConsulting
-            Professional Services</a>
+        <span style="float: left">&copy; 2019 by<a href="https://dta-labs.github.io/projects">DTA Labs</a></span>
+        <span style="float: right; margin-right: 10px;">Powered by<a
+                href="https://www.dwrobelconsulting.com">DWConsulting
+                Professional Services</a></span>
     </div>
 
 </body>

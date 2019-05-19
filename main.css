@@ -167,6 +167,21 @@ body {
     font-size: 1.2em;
 }
 
+.taskChechList {
+    font-size: .5em;
+    padding-left: 50px;
+    background: white;
+}
+
+.taskChechList .checkboxControl {
+    transform: scale(1);
+    margin-top: 5px;
+}
+
+.taskChechList .checkItemOptions {
+    display: none;
+}
+
 /* #endregion */
 
 /* #region Columns*/
@@ -515,6 +530,7 @@ header {
     margin-top: 5px;
     text-align: right;
     float: right;
+    cursor: pointer;
 }
 
 .optionsButtons {
@@ -522,6 +538,34 @@ header {
     float: left;
     width: 100%;
     font-size: .9em;
+}
+
+.optionsBar {
+    float: right;
+    width: 130px;
+    position: fixed;
+    top: 65px;
+    background: whitesmoke;
+    z-index: 999;
+    right: 5px;
+    border: 1px solid gray;
+    box-shadow: 2px 2px 2px black;
+    border-radius: 5px;
+    padding: 10px 10px 10px 0px;
+}
+
+.optionsBar ul li a {
+    padding: 3px;
+    width: 115px;
+    color: black;
+}
+
+.optionsBar ul li a:hover {
+    background: rgba(0, 0, 0, 0.5);
+    margin: 0px;
+    padding: 3px;
+    border-radius: 5px;
+    color: white;
 }
 
 ul {
@@ -582,6 +626,10 @@ ul li a:hover {
 @media only screen and (max-width: 640px) {
     .container {
         padding-top: 50px;
+    }
+
+    .optionsBar {
+        top: 45px;
     }
 
     .projectArea {

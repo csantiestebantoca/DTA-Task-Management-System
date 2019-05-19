@@ -5,8 +5,8 @@ if ('serviceWorker' in navigator) {
 }
 
 let usersList;
-let projectsList;
 let authUser;
+let projectsList;
 let actualProject;
 let actualProjectKey;
 let tasksList;
@@ -84,6 +84,18 @@ function spawnNotification(theBody, theIcon, theTitle) {
 
 // #endregion
 
+// #region Menu
+
+function toggleUserOptions() {
+    optionsSideBarStatus = (document.getElementById('optionsSideBar').style.display == 'none') ? 'block' : 'none';
+    document.getElementById('optionsSideBar').style.display = optionsSideBarStatus;
+    if (actualProject) {
+        document.getElementById('projectOptionsSideBar').style.display = optionsSideBarStatus;
+    }
+}
+
+// #endregion
+
 // #region Login
 
 function pswKeyPressed() {
@@ -142,11 +154,31 @@ function createNewUserInFB(newUser) {
     login(newUser.mail, newUser.password);
 }
 
+function showInvitationWindow() {
+    closeAllWindows();
+    document.getElementById('invitation').style.display = 'block';
+}
+
+function sendUserInvitation() {
+    let invitedUserMail = document.getElementById('invitedUserMail').value.replace(/\./g, '-');
+    if (actualProject) {
+        if (!actualProject.team.includes(invitedUserMail)) {
+            actualProject.team += "," + invitedUserMail;
+            createNewProjectInFB(actualProject.key, actualProject);
+        }
+        alert(document.getElementById('invitedUserMail').value + " is already in project team");
+        selectView();
+    } else {
+        document.getElementById('invitationError').style.display = 'block';
+    }
+}
+
 // #endregion
 
 // #region Projects
 
 function selectView() {
+    closeAllWindows();
     switch (viewIndex) {
         case 1:
             showSelectedProject();
@@ -154,6 +186,8 @@ function selectView() {
         case 2:
             showProjectTaskList();
             break;
+        default:
+            showProjectSelector();
     }
 }
 
@@ -168,6 +202,9 @@ function closeAllWindows() {
     document.getElementById('loginError').style.display = 'none';
     document.getElementById('optionsButtons').style.display = 'none';
     document.getElementById('newProjectWindow').style.display = 'none';
+    document.getElementById('invitation').style.display = 'none';
+    document.getElementById('invitationError').style.display = 'none';
+    document.getElementById('optionsSideBar').style.display = 'none';
 }
 
 function initializeUI() {
@@ -195,20 +232,32 @@ function showProjectsList() {
 }
 
 function createProjectTile(project) {
-    return `
+    let html = `
         <div class="projectBox" onclick="selectProject('${project.key}')">
             <div class="projectBoxName">${project.name}</div>
+        `;
+    if (project.leader == authUser.key) {
+        html += `
             <div>
                 <i class="fa fa-trash-o deleteProjectIcon" aria-hidden="true" onclick="deleteProject('${project.key}', '${project.name}')" title="Delete project"></i>
             </div>
+        `;
+    }
+    html += `
         </div>
     `;
+    return html;
 }
 
 function deleteProject(projectKey, projectName) {
-    let confirmDelete = confirm(`The project "${projectName}" will be deleted`);
-    if (confirmDelete == true) {
-        firebase.database().ref("projects/" + projectKey).remove();
+    if (actualProject.team.includes(authUser.key)) {
+        let confirmDelete = confirm(`The project "${projectName}" will be deleted`);
+        if (confirmDelete == true) {
+            firebase.database().ref("projects/" + projectKey).remove();
+        }
+        alert ("Project was removed successfully");
+    } else {
+        alert ("You don't have permission for this operation");
     }
 }
 
@@ -288,9 +337,12 @@ function setProjectTaskList() {
         let taskImportant = (actTask.important == "true") ? '<i class="fa fa-flag" aria-hidden="true" title="Important"></i>&nbsp;&nbsp;' : '';
         let taskFavorite = (actTask.favorite == "true") ? '<i class="fa fa-star" aria-hidden="true" title="Favorite"></i>&nbsp;&nbsp;' : '';
         html += '<div id="taskList-' + task + '" class="taskTile ' + taskStatusClass + '" onclick="editTask(\'' + task + '\')">';
-        html += '   <div class="taskTitle"><b>' + task.split('_')[1] + '.-</b> ' + actTask.task + '</div>';
+        html += '   <div class="taskTitle">' + task.split('_')[1] + '.- ' + actTask.task + '</div>';
+        html += '   <div class="taskChechList">';
+        html += getCheckListHTML(task, actTask.checkList);
+        html += '   </div>';
         html += '   <div class="taskBar">';
-        html += '       <div class="taskDates" style="margin-top: 7px;">[' + taskStatus + ']&nbsp;&nbsp;&nbsp;<b>' + taskComment + taskImportant + taskFavorite + ' <i class="fa fa-calendar" aria-hidden="true"></i> ' + actTask.startDate + '&nbsp;&nbsp;&nbsp;<b>' + getTaskCheckLitStatus(actTask.checkList) + '</b></div>';
+        html += '       <div class="taskDates" style="margin-top: 7px;">[' + actualProject.columns[taskStatus] + ']&nbsp;&nbsp;&nbsp;<b>' + taskComment + taskImportant + taskFavorite + ' <i class="fa fa-calendar" aria-hidden="true"></i> ' + actTask.startDate + '&nbsp;&nbsp;&nbsp;</b>' + getTaskCheckLitStatus(actTask.checkList) + '</b></div>';
         html += '       <div class="taskResponsibles">' + getTaskResponsibleAvatars(actTask.responsible) + '</div>';
         html += '   </div>';
         html += '</div>';
@@ -425,7 +477,8 @@ function getGeneralTasks() {
             responsible: "",
             repeat: "",
             status: ""
-        }, task_02: {
+        },
+        task_02: {
             task: "Task 2",
             area: "",
             startDate: "",
@@ -704,7 +757,8 @@ function getMeetingTasks() {
                 "item": "Send call / Enviar convocatoria",
                 "status": false
             }]
-        }, task_02: {
+        },
+        task_02: {
             task: "Meeteing organization / Organización de la reunión",
             area: "",
             startDate: "",
@@ -721,7 +775,8 @@ function getMeetingTasks() {
                 "item": "Define who writes the memory of the meeting / Definir quién escribe la memoria de la reunión",
                 "status": false
             }]
-        }, task_03: {
+        },
+        task_03: {
             task: "Informations / Informaciones",
             area: "",
             startDate: "",
@@ -769,7 +824,8 @@ function getPartyTasks() {
                 "item": "Deliver invitations / Entregar invitaciones",
                 "status": false
             }]
-        }, task_02: {
+        },
+        task_02: {
             task: "Food and drink / Comidas y bebidas",
             area: "",
             startDate: "",
@@ -779,7 +835,8 @@ function getPartyTasks() {
             responsible: "",
             repeat: "",
             status: ""
-        }, task_03: {
+        },
+        task_03: {
             task: "Music and entertainment / Música y entretenimiento",
             area: "",
             startDate: "",
@@ -789,7 +846,8 @@ function getPartyTasks() {
             responsible: "",
             repeat: "",
             status: ""
-        }, task_04: {
+        },
+        task_04: {
             task: "Budget / Presupuesto",
             area: "",
             startDate: "",
@@ -826,7 +884,10 @@ function showProjectUsers() {
     let usersPicture = "";
     usersList.forEach(user => {
         let actUser = user.val();
-        usersPicture += "<div class='userPicture'><img src='" + actUser.picture + "' class='avatar'></div><div class='userInfo'><span class='userName'> " + actUser.name + "</span><br><span class='userPosition'> " + actUser.position + "</span></div>";
+        if (actualProject.team.includes(user.key)) {
+            let picture = (actUser.picture) ? "<img src='" + actUser.picture + "' class='avatar'></img>" : "<i class='fa fa-user-circle-o avatar' aria-hidden='true' style='font-size: 1.9em;'></i>";
+            usersPicture += "<div class='userPicture'>" + picture + "</div><div class='userInfo'><span class='userName'> " + actUser.name + "</span><br><span class='userPosition'> " + actUser.position + "</span></div>";
+        }
     });
     element.innerHTML = usersPicture;
 }
@@ -924,11 +985,13 @@ function showResponsibleWindow() {
     let responsibles = document.getElementById("responsible").value;
     let teamHTML = "";
     usersList.forEach(user => {
-        let status = (responsibles.includes(user.key)) ? "checked" : "";
-        teamHTML += "<div>";
-        teamHTML += "   <input type='checkbox' value='" + user.key + "' " + status + " class='checkListChecked' style='width: 20px; transform: scale(1.2);'>";
-        teamHTML += "   <img src='" + user.val().picture + "' class='avatar' style='width: 20px;'> " + user.val().name + "</div>";
-        teamHTML += "</div>";
+        if (actualProject.team.includes(user.key)) {
+            let status = (responsibles.includes(user.key)) ? "checked" : "";
+            teamHTML += "<div>";
+            teamHTML += "   <input type='checkbox' value='" + user.key + "' " + status + " class='checkListChecked' style='width: 20px; transform: scale(1.2);'>";
+            teamHTML += "   <img src='" + user.val().picture + "' class='avatar' style='width: 20px;'> " + user.val().name + "</div>";
+            teamHTML += "</div>";
+        }
     });
     document.getElementById('teamList').innerHTML = teamHTML;
 }
