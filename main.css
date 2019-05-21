@@ -526,7 +526,15 @@ header {
     margin-top: 5px;
     text-align: right;
     float: right;
+}
+
+.optionsMenu {
+    float: right;
     cursor: pointer;
+    font-size: 1.8em;
+    padding: 0px 10px 0px 20px;
+    color: white;
+    margin-top: 12px;
 }
 
 .optionsButtons {
@@ -618,20 +626,38 @@ ul li a:hover {
 /* #endregion */
 
 /* #region Responsive */
-@media screen and (max-width: 320px) {
-}
+@media screen and (max-width: 320px) {}
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 600px) {
     .container {
         padding-top: 50px;
+    }
+
+    .taskList {
+        height: 80vh;
     }
 
     .optionsBar {
         top: 45px;
     }
 
+    .optionsMenu {
+        margin-top: 0px;
+    }
+
     button {
-        width: 55px;
+        width: 70px;
+    }
+
+    .projectBox {
+        width: 150px;
+        height: 150px;
+        font-size: 1.2em;
+        margin: 10px 15px;
+    }
+
+    .projectBoxName {
+        font-size: 1em;
     }
 
     .header-main {
@@ -642,6 +668,7 @@ ul li a:hover {
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+
     .projectArea {
         display: grid;
         grid-template-areas: "projectAreaRight""projectAreaLeft""column0""column1""column2""column3""column4";

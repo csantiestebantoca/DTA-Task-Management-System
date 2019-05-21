@@ -49,7 +49,9 @@
                 <span>Easy Tasks</span>
                 <span id="projectName" class="projectName">Make your work easy</span>
             </div>
-            <div id="userOptions" class="userOptions" onclick="toggleUserOptions()"></div>
+            <i class="fa fa-ellipsis-v optionsMenu" aria-hidden="true" onclick="toggleUserOptions()"
+                title="Options..."></i>
+            <div id="userOptions" class="userOptions"></div>
         </div>
         <div id="optionsButtons" class="optionsButtons">
             <nav style="float: left;">
@@ -243,31 +245,32 @@
             </div>
 
             <div id="projectTaskList" class="projectArea" style="display: none;">
-                <div class="filterBar">
-                    <ul>
-                        <li><input id="searchTask" type="text" onkeyup="searchTask()"
-                                style="margin-bottom: 0px; margin-top: 3px; background: transparent;"
-                                placeholder="Search..."></li>
-                        <li><a href="#" onclick="filterTask('All')">&nbsp;<i class="fa fa-list-alt filterBarItem"
-                                    aria-hidden="true" title="Show all tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('0')">&nbsp;<i class="fa fa-clone filterBarItem"
-                                    aria-hidden="true" title="Show To tasks do"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('1')">&nbsp;<i class="fa fa-pencil-square-o filterBarItem"
-                                    aria-hidden="true" title="Show On schedule tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('2')">&nbsp;<i class="fa fa-square-o filterBarItem"
-                                    aria-hidden="true" title="Show Overdue tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('3')">&nbsp;<i class="fa fa-check-square-o filterBarItem"
-                                    aria-hidden="true" title="Show Done tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('4')">&nbsp;<i class="fa fa-window-close-o filterBarItem"
-                                    aria-hidden="true" title="Show Canceled tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('Important')">&nbsp;<i class="fa fa-flag-o filterBarItem"
-                                    aria-hidden="true" title="Show Important tasks"></i>&nbsp;</a></li>
-                        <li><a href="#" onclick="filterTask('Favorite')">&nbsp;<i class="fa fa-star-o filterBarItem"
-                                    aria-hidden="true" title="Show Favorite tasks"></i>&nbsp;</a></li>
-                    </ul>
+                <div class="projectInfo" style="margin-bottom: 10px;">
+                    <table>
+                        <tr>
+                            <th><i class="fa fa-list-alt filterBarItem" aria-hidden="true" title="Show all tasks"
+                                    onclick="filterTask('All')"></i><th>
+                            <th><i class="fa fa-clone filterBarItem" aria-hidden="true" title="Show To tasks do"
+                                    onclick="filterTask('0')"></i></th>
+                            <th><i class="fa fa-pencil-square-o filterBarItem" aria-hidden="true"
+                                    title="Show On schedule tasks" onclick="filterTask('1')"></i></th>
+                            <th><i class="fa fa-square-o filterBarItem" aria-hidden="true" title="Show Overdue tasks"
+                                    onclick="filterTask('2')"></i></th>
+                            <th><i class="fa fa-check-square-o filterBarItem" aria-hidden="true" title="Show Done tasks"
+                                    onclick="filterTask('3')"></i></th>
+                            <th><i class="fa fa-window-close-o filterBarItem" aria-hidden="true"
+                                    title="Show Canceled tasks" onclick="filterTask('4')"></i></th>
+                            <th><i class="fa fa-flag-o filterBarItem" aria-hidden="true" title="Show Important tasks"
+                                    onclick="filterTask('Important')"></i></th>
+                            <th><i class="fa fa-star-o filterBarItem" aria-hidden="true" title="Show Favorite tasks"
+                                    onclick="filterTask('Favorite')"></i></th>
+                            <th><input id="searchTask" type="text" onkeyup="searchTask()"
+                                    style="margin-bottom: 0px; margin-top: 3px; background: transparent;"
+                                    placeholder="Search..."></th>
+                        </tr>
+                    </table>
                 </div>
-                <div class="projectInfo" style="margin-bottom: 10px;">Task List:</div>
-                <div id="tasksList" class="taskList"></div>
+                <div id="tasksList" class="taskList">There are no tasks in this category...</div>
             </div>
         </div>
 
