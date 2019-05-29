@@ -221,7 +221,12 @@ function showProjectSelector() {
 
 function showProjectsList() {
     //showProjectSelector();
-    let projectTiles = "";
+    let projectTiles = `
+        <div id="project_0" class="projectBox">
+            <div class="projectBoxName" onclick="showNewProjectWindow()"><span
+                    style="font-size: 7em; margin-top: -30px;">+</span></div>
+        </div>
+    `;
     projectsList.forEach(project => {
         let actProject = project.val();
         actProject.key = project.key;
@@ -256,9 +261,9 @@ function deleteProject(projectKey, projectName) {
         if (confirmDelete == true) {
             firebase.database().ref("projects/" + projectKey).remove();
         }
-        alert ("Project was removed successfully");
+        alert("Project was removed successfully");
     } else {
-        alert ("You don't have permission for this operation");
+        alert("You don't have permission for this operation");
     }
 }
 
