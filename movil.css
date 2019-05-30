@@ -123,6 +123,14 @@
         height: 140px;
         margin: 10px 15px;
     }
+
+    .verticalSeparator {
+        display: none;
+    }
+
+    .taskModal {
+        width: 90%;
+    }
 }
 
 @media screen and (max-width: 320px) {
