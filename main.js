@@ -18,6 +18,7 @@ let viewIndex = 1;
 
 window.onload = function () {
     viewIndex = (screen.width > 480) ? 1 : 2;
+    setFileUploadEvent();
     initializeFirebase();
     initializeUI();
     loadUsersFromFB();
@@ -81,6 +82,35 @@ function spawnNotification(theBody, theIcon, theTitle) {
         icon: theIcon
     }
     let n = new Notification(theTitle, options);
+}
+
+function setFileUploadEvent() {
+    document.getElementById('fileLoad').addEventListener('change', function (event) {
+        let taskKey = document.getElementById("key").value;
+        let fileList = document.getElementById("fileList").value;
+        event.preventDefault();
+        let file = event.target.files[0];
+        loadFileToFB(file, taskKey, fileList);
+    });
+}
+
+function loadFileToFB(file, taskKey, fileList) {
+    let refStorage = firebase.storage().ref(actualProject.key + '/' + taskKey).child(file.name);
+    let uploadTask = refStorage.put(file);
+    uploadTask.on('state_changed', null,
+        function (error) {
+            alert('Error loading file: ', error);
+        },
+        function () {
+            alert('File loading successful');
+            fileList += file.name + ',';
+            updateTaskFileList(actualProject.key, taskKey, fileList);
+        }
+    );
+}
+
+function updateTaskFileList(projectKey, taskKey, fileList) {
+    firebase.database().ref(projectKey + "/tasks/" + taskKey + "/fileList/").set(fileList);
 }
 
 // #endregion
@@ -296,7 +326,8 @@ function getNewIndex(list) {
             result = id;
         }
     }
-    return result + 1;
+    result++;
+    return (result < 10) ? "0" + result : result;
 }
 
 function setProjectData() {
@@ -503,37 +534,304 @@ function getBusinessTasks() {
     let columns = ["To-do/Tareas", "Doing/Haciendo", "Overdue/Atrasadas", "Done/Completadas", "Canceled/Canceladas"];
     let tasks = {
         task_01: {
-            task: "Task 1",
-            area: "Cliens",
+            task: "Project and Objectives / Proyecto y objetivos",
+            area: "",
             startDate: "",
             endDate: "",
             percentage: "0",
             comments: "",
             responsible: "",
             repeat: "",
-            status: ""
+            status: "",
+            checkList: [{
+                "item": "The business / El negocio",
+                "status": false
+            }, {
+                "item": "Why this business? / Por qué este negocio?",
+                "status": false
+            }, {
+                "item": "The promoters / Los promotores",
+                "status": false
+            }, {
+                "item": "Mission / Misión",
+                "status": false
+            }, {
+                "item": "Vision / Visión",
+                "status": false
+            }, {
+                "item": "Objectives / Objetivos",
+                "status": false
+            }, {
+                "item": "Key points for success / Puntos claves para el éxito",
+                "status": false
+            }, {
+                "item": "Risks / Riesgos",
+                "status": false
+            }]
         },
         task_02: {
-            task: "Task 1",
-            area: "Strategy",
+            task: "Situation and perspectives of the sector / Situación y perspectivas del sector",
+            area: "",
             startDate: "",
             endDate: "",
             percentage: "0",
             comments: "",
             responsible: "",
             repeat: "",
-            status: ""
+            status: "",
+            checkList: [{
+                "item": "Situation of the market and the sector / Situación del mercado y del sector",
+                "status": false
+            }, {
+                "item": "Three great opportunities / Tres grandes oportunidades",
+                "status": false
+            }]
         },
         task_03: {
-            task: "Task 2",
-            area: "Value proposal",
+            task: "Market and competition / Mercado y competencia",
+            area: "",
             startDate: "",
             endDate: "",
             percentage: "0",
             comments: "",
             responsible: "",
             repeat: "",
-            status: ""
+            status: "",
+            checkList: [{
+                "item": "The potential market / El merado potencial",
+                "status": false
+            }, {
+                "item": "Competition: overview / Copetencia: visión general",
+                "status": false
+            }, {
+                "item": "The real competition / La competencia real",
+                "status": false
+            }, {
+                "item": "Análisis de la competencia / Análisis de la competencia",
+                "status": false
+            }, {
+                "item": "Main competitors / Princiales competidores",
+                "status": false
+            }]
+        },
+        task_04: {
+            task: "Services and products / Servicios y productos",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Our service offer / Nuestra oferta de servicios",
+                "status": false
+            }, {
+                "item": "Own and outsourced services / Servicios propios y subcontratados",
+                "status": false
+            }, {
+                "item": "Collaborators and alliances / Colaboradores y alianzas",
+                "status": false
+            }]
+        },
+        task_05: {
+            task: "Marjeting / Mercadotecnia",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "D.A.F.O. Analysis / Análisis D.A.F.O.",
+                "status": false
+            }, {
+                "item": "Competitiveness analysis / Análisis de competitividad",
+                "status": false
+            }, {
+                "item": "Keys to the future / Claves de futuro",
+                "status": false
+            }, {
+                "item": "Target audiences / Público objetivo",
+                "status": false
+            }, {
+                "item": "Sources / Fuentes",
+                "status": false
+            }, {
+                "item": "Service and product policy / Poítica de servicio y producto",
+                "status": false
+            }, {
+                "item": "Pricing, budgets and competitions policy / Política de precios, presupuestos y concursos",
+                "status": false
+            }, {
+                "item": "Service and customer service policy / Política de servicio y atención al cliente",
+                "status": false
+            }, {
+                "item": "Communication strategy / Estrategia de comunicación",
+                "status": false
+            }, {
+                "item": "Market penetration strategy / Estrategia de penetración en el mercado",
+                "status": false
+            }, {
+                "item": "Advertising and Promotion (media) / Publicidad y Promoción (medios)",
+                "status": false
+            }, {
+                "item": "Marketing Plan - Summary / Plan de Marketing - Resumen",
+                "status": false
+            }]
+        },
+        task_06: {
+            task: "Ventas",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Sales strategy / Estrategia de ventas",
+                "status": false
+            }, {
+                "item": "The sales team / El equipo de ventas",
+                "status": false
+            }, {
+                "item": "First year sales plan (summary) / Plan de ventas de primer año (resumen)",
+                "status": false
+            }, {
+                "item": "Estimation of sale / Estimación de venta",
+                "status": false
+            }]
+        },
+        task_07: {
+            task: "Business organization / Organizaión de la empresa",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Dirección de la empresa",
+                "status": false
+            }, {
+                "item": "Dirección de la empresa / Equipo directivo y asesores",
+                "status": false
+            }, {
+                "item": "Key people of the project / Personas clave del proyecto",
+                "status": false
+            }, {
+                "item": "Functional organization of the company / Organización funcional de la empresa",
+                "status": false
+            }, {
+                "item": "Working and remunerative conditions / Condiciones de trabajo y remunerativas",
+                "status": false
+            }, {
+                "item": "Human Resources Forecast / Previsión de Recursos Humanos",
+                "status": false
+            }]
+        },
+        task_08: {
+            task: "Legal and corporate aspects / Aspectos legales y societarios",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Society / La sociedad",
+                "status": false
+            }, {
+                "item": "Managers / Administradores",
+                "status": false
+            }, {
+                "item": "Social and operational headquarters / Sede social y operativa",
+                "status": false
+            }, {
+                "item": "Brand / Marca",
+                "status": false
+            }, {
+                "item": "Licenses and rights / Licencias y derechos",
+                "status": false
+            }, {
+                "item": "Legal obligations /Obligaciones legales",
+                "status": false
+            }, {
+                "item": "Permits and limitations / Permisos y limitaciones",
+                "status": false
+            }]
+        },
+        task_09: {
+            task: "Establishment and investments / Establecimiento e inversiones",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Establishment plan / Plan de establecimiento",
+                "status": false
+            }, {
+                "item": "Investment plan / Plan de inversiones",
+                "status": false
+            }]
+        },
+        task_10: {
+            task: "Forecast of results / Previsión de resultados",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Important premises / Premisas importantes",
+                "status": false
+            }, {
+                "item": "Breakeven analysis / Análisis del punto de equilibrio",
+                "status": false
+            }, {
+                "item": "Five-year results / Resultados a cinco años",
+                "status": false
+            }, {
+                "item": "Treasury / Tesorería",
+                "status": false
+            }, {
+                "item": "Most relevant ratios / Ratios más relevantes",
+                "status": false
+            }]
+        },
+        task_11: {
+            task: "Financing plan / Plan de financiación",
+            area: "",
+            startDate: "",
+            endDate: "",
+            percentage: "0",
+            comments: "",
+            responsible: "",
+            repeat: "",
+            status: "",
+            checkList: [{
+                "item": "Financial needs / Necesidades financieras",
+                "status": false
+            }, {
+                "item": "Financing plan / Plan de financiación",
+                "status": false
+            }]
         }
     };
     return [columns, tasks];
@@ -1114,6 +1412,8 @@ function showFrom(task, taskKey, showDeleteButton) {
     document.getElementById("status").value = task.status;
     //document.getElementById("repeat").value = task.repeat;
     document.getElementById("checkList").innerHTML = getCheckListHTML(taskKey, task.checkList);
+    document.getElementById("fileList").value = task.fileList;
+    document.getElementById("fileListUI").value = sowFileList(task.fileList);
     document.getElementById("important").value = task.important;
     document.getElementById("favorite").favorite = task.favorite;
     let taskImportant = (task.important == 'true') ? 'fa fa-flag' : 'fa fa-flag-o';
@@ -1196,6 +1496,20 @@ function getCheckListHTML(taskKey, checkList) {
     return result;
 }
 
+function sowFileList(fileList) {
+    let result = "";
+    let fileArray = fileList.split(",");
+    fileArray.forEach (file => {
+        if (file) {
+            result += `
+                <div style="float: left; text-align: center;" title="View ${file}">
+                    <span><i class="fa fa-file"></i><br>${file}</span>
+                </div>
+            `;
+        }
+    });
+}
+
 function convetCheckItemToTask(taskKey, checkListKey) {
     calculatePercentage();
     //firebase.database().ref("projects/" + actualProject.key + "/tasks/" + taskKey + "/checkList/" + checkListKey).remove();
@@ -1245,7 +1559,8 @@ function updateTask() {
         //repeat: document.getElementById("repeat").value,
         checkList: getTaskCheckList(),
         important: document.getElementById("important").value,
-        favorite: document.getElementById("favorite").value
+        favorite: document.getElementById("favorite").value,
+        fileList: document.getElementById("fileList").value
     }
     updateTaskInFB(task, taskKey);
 }

@@ -1,7 +1,7 @@
 {
-    "name": "DTA Task Management System",
-    "short_name": "DTA-TMS",
-    "description": "Free Planning System for task management",
+    "name": "EasyTask Management System",
+    "short_name": "EasyTask",
+    "description": "EasyTask the DTA Labs free Planning System for task management.",
     "background_color": "#2B2B2B",
     "theme_color": "#0000EF",
     "orientation": "portrait",
@@ -12,8 +12,33 @@
     "icons": [
         {
             "src": "./image.png",
+            "sizes": "48x48",
+            "type": "image/ico_mdpi.png" 
+        },
+        {
+            "src": "./image.png",
+            "sizes": "72x72",
+            "type": "image/ico_hdpi.png" 
+        },
+        {
+            "src": "./image.png",
+            "sizes": "96x96",
+            "type": "image/ico_xhdpi.png" 
+        },
+        {
+            "src": "./image.png",
             "sizes": "144x144",
-            "type": "image/png" 
+            "type": "image/ico_xxhdpi.png" 
+        },
+        {
+            "src": "./image.png",
+            "sizes": "192x192",
+            "type": "image/ico_xxxhdpi.png" 
+        },
+        {
+            "src": "./image.png",
+            "sizes": "512x512",
+            "type": "image/ico_512.png" 
         }
     ]
 }
